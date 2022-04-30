@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 from datetime import datetime
-import uuid
 
 class Turno:
 
@@ -30,9 +29,10 @@ class Turno:
 
 class Empleado:
 
-    def __init__(self, id, y, m):
+    def __init__(self, id, nombre, y, m):
         '''Crea una nueva instancia de un empleado'''
         self.id = id
+        self.nombre = nombre
         self.y = y
         self.m = m
         self.turnos = []

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %} Turnos: {{ mes['titulo'] }} {% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      {% for d in dow %}
+        <th>{{ d }}</th>
+      {% endfor %}
+    </tr>
+    {% for w in range((mes['dias'] + mes['dia1']) // 7 + 1) %}
+      <tr>
+        {% for d in range(7) %}
+          {% set dia = w * 7 - mes['dia1'] + d + 1 %}
+          {% if dia < 1 %}
+            <td></td>
+          {% elif dia <= mes['dias'] %}
+            {% set festivo = 'class="festivo" style="color: red;"' if dia in mes['festivos'] or dow[d] == 'domingo' else ''%}
+            <td {{ festivo | safe }}>
+              <p>{{ dia }}</p>
+              <div>lista personas</div>
+            </td>
+          {% endif %}
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    const tmp = '{{ tmp }}';
+  </script>
+  <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
