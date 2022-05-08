@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% set month = schedule.get_month() %}
+
+{% block title %} Turnos: {{ month.titulo }} {% endblock %}
+
+{% block style %}
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/schedule.css') }}">
+{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      {% for d in dow %}
+        <th>{{ d }}</th>
+      {% endfor %}
+    </tr>
+    {% for w in range((month.days + month.day1) // 7 + 1) %}
+      <tr>
+        {% for d in range(7) %}
+          <td>
+            {% set day = w * 7 - month.day1 + d + 1 %}
+            {% set holiday = ' holiday' if day in month.holidays or dow[d] == 'domingo' else '' %}
+
+            {% if 1 <= day <= month['days'] %}
+              <div class="day{{ holiday }}">
+                <div class="title">{{ day }}</div>
+                {% for shift, employees in schedule.employees_in_day(day).items() %}
+                  <div class="shift {{ shift }}">
+                    <div class="title">{{ shifts.get(shift) }}</div>
+                    {% for employee in employees %}
+                      <div class="employee-shift">
+                        <div class="name">{{ employee[0] }}</div>
+                        <div class="hours">{{ employee[1] }}</div>
+                        <div class="del">x</div>
+                      </div>
+                    {% endfor %}
+                    <div class="add">+</div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript">
+    const tmp = '{{ tmp }}';
+  </script>
+  <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
