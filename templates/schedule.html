@@ -26,16 +26,16 @@
               <div class="day{{ holiday }}">
                 <div class="title">{{ day }}</div>
                 {% for shift, employees in schedule.employees_in_day(day).items() %}
-                  <div class="shift {{ shift }}">
+                  <div class="shift {{ shift }}" id="{{ day }}-{{ shift }}">
                     <div class="title">{{ shifts.get(shift) }}</div>
                     {% for employee in employees %}
-                      <div class="employee-shift">
-                        <div class="name">{{ employee[0] }}</div>
-                        <div class="hours">{{ employee[1] }}</div>
-                        <div class="del">x</div>
+                      <div class="employee-shift" id="{{ employee[0] }}">
+                        <div class="del" onclick="rem_shift(this);">x</div>
+                        <div class="employee_id">{{ employee[1] }}</div>
+                        <div class="hours">{{ employee[2] }}</div>
                       </div>
                     {% endfor %}
-                    <div class="add">+</div>
+                    <div class="add" onclick="add_shift(this);">+</div>
                   </div>
                 {% endfor %}
               </div>
@@ -47,25 +47,16 @@
   </table>
 
   <table class="summary">
-    {% set sum_titles, sum_rows = schedule.summary() %}
-    <tr>
-      {% for title in sum_titles %}
-        <th>{{ title }}</th>
-      {% endfor %}
-    </tr>
-    {% for row in sum_rows %}
-    <tr>
-      {% for val in row %}
-        <td>{{ val }}</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
+    {{ schedule.summary_html() | safe }}
   </table>
 {% endblock %}
 
 {% block scripts %}
   <script type="text/javascript">
     const tmp = '{{ tmp }}';
+    const month = '{{ month.title }}';
+    const anestesiologos = {{ employees | safe }};
+    const shift_hours = {{ shift_hours | safe }};
   </script>
   <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
   <script src="{{ url_for('static', filename='js/main.js') }}"></script>

@@ -3,6 +3,7 @@ table {
   text-transform: uppercase;
   font-size: small;
   cursor: default;
+  margin: 0 auto;
 }
 table.summary {
   background: white;
@@ -16,6 +17,7 @@ table.summary th {
   width: 90px;
   background: #818181;
   color: white;
+  padding: 5px 2px;
 }
 table.summary th:first-child {
   width: 120px;
@@ -35,7 +37,7 @@ table td {
   vertical-align: top;
 }
 
-@media (min-width: 728px) {
+@media (min-width: 1024px) {
   table.schedule {
     position: absolute;
     top: 20px;
@@ -89,7 +91,7 @@ table td {
 .day .shift .employee-shift div {
   border-radius: 50%;
 }
-.day .shift .employee-shift .name {
+.day .shift .employee-shift .employee_id {
   font-size: x-small;
   padding: 1.5px;
 }
@@ -137,6 +139,24 @@ table td {
 }
 .day .shift .add:active {
   background: #C0F9D4;
+}
+
+form table {
+  text-transform: capitalize;
+}
+form table tr {
+  line-height: 22px;
+}
+form table tr th {
+  text-align: left;
+  padding-right: 10px;
+}
+form table tr td {
+  text-align: left;
+  width: min-content;
+}
+form table tr td input[type=number] {
+  width: 60px;
 }
 
 /*# sourceMappingURL=schedule.css.map */

@@ -15,6 +15,32 @@ socketio = SocketIO(app, cors_allowed_origins = '*', async_mode='gevent') #, log
 
 os.chdir(os.path.dirname(__file__))
 
+
+employees = ([
+    Employee('naranjo', 'Naranjo'),
+    Employee('bolaños', 'Jaime Bolaños'),
+    Employee('cardona', 'Eduin Cardona'),
+    Employee('pabon', 'Favio Pabón'),
+    Employee('mera', 'Soraya Mera'),
+    Employee('m. orozco', 'Mario Orozco'),
+    Employee('posso', 'Mónica Posso'),
+    Employee('arroyave', 'Julián Arroyave'),
+    Employee('vallejos', 'Lorena Vallejos'),
+    Employee('benjumea', 'Angélica Benjumea'),
+    Employee('morales', 'Maryurin Morales'),
+    Employee('serna', 'Ana Milena Serna'),
+    Employee('rosillo', 'Andrés Rosillo'),
+    Employee('gallego', 'Gallego'),
+    Employee('alvarez', 'Danik Álvarez'),
+    Employee('castro', 'Jairo Castro'),
+    Employee('botero', 'Alejandro Botero'),
+    Employee('jf. orozco', 'Johann Orozco')
+])
+employees.sort(key=lambda x: x.id)
+sched = Schedule(2022, 6, employees)
+tmp = '123456789'
+
+
 @app.route('/')
 def index():
     # Verifica que esté loggeado
@@ -23,25 +49,36 @@ def index():
 
 @app.route('/schedule')
 def schedule():
-    employees = ([
-        Employee('Botero', 'Alejandro Botero'),
-        Employee('Pabon', 'Favio Pabón'),
-        Employee('Castro', 'Jairo Castro')
-    ])
-    schedule = Schedule(2022, 5, employees)
-
-    schedule.add_shift(Shift('Botero', 1, 'qx_am'))
-    schedule.add_shift(Shift('Pabon', 8, 'qx_am'))
-    schedule.add_shift(Shift('Castro', 4, 'ce_pm'))
-    schedule.add_shift(Shift('Castro', 5, 'qx_pm'))
-    schedule.add_shift(Shift('Castro', 30, 'qx_pm'))
-    schedule.add_shift(Shift('Castro', 20, 'n'))
-
-    tmp = '123456789'
-
+    empl = {}
+    for e in employees:
+        empl[e.id] = e.name
     return render_template('schedule.html',
                             tmp=tmp,
                             dow=dow,
                             shifts=Shift.shifts,
                             shift_hours=Shift.shift_hours,
-                            schedule=schedule)
+                            schedule=sched,
+                            employees = empl)
+
+@socketio.on('update_schedule')
+def update_schedule(data):
+    try:
+        res = {}
+
+        if data.get('rem'):
+            sched.rem_shift(data['rem'])
+
+        if data.get('add'):
+            res['add'] = sched.add_shift(
+                        data['add']['employee_id'],
+                        data['add']['day'],
+                        data['add']['shift'],
+                        hours = data['add']['hours']
+                        )
+
+        res['result'] = 'ok'
+        res['summary'] = sched.summary_html()
+
+        emit('response', res)
+    except Exception as ex:
+        emit('response', f'error >> {ex}')
