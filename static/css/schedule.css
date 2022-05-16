@@ -2,6 +2,32 @@ table {
   border-collapse: collapse;
   text-transform: uppercase;
   font-size: small;
+  cursor: default;
+}
+table.summary {
+  background: white;
+  padding: 10px 0 10px 10px;
+  margin-top: 20px;
+}
+table.summary th, table.summary td {
+  border: 1px solid lightgrey;
+}
+table.summary th {
+  width: 90px;
+  background: #818181;
+  color: white;
+}
+table.summary th:first-child {
+  width: 120px;
+}
+table.summary tr {
+  background: #e2e2e2;
+}
+table.summary tr:nth-child(2n) {
+  background: #eee;
+}
+table.summary tr:not(:first-child):hover {
+  background: coral;
 }
 table td {
   width: 100px;
@@ -9,12 +35,33 @@ table td {
   vertical-align: top;
 }
 
+@media (min-width: 728px) {
+  table.schedule {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  table.summary {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+  table.summary tr :nth-child(n+3) {
+    display: none;
+  }
+  table.summary:hover tr :nth-child(n+3) {
+    display: table-cell;
+  }
+}
 .day {
   background: white;
   border-radius: 10px;
+  margin: 5px 1px;
 }
 .day.holiday {
-  background: #FEC3C3;
+  background: #FFD4D4;
 }
 .day .title {
   font-weight: bold;
@@ -41,6 +88,10 @@ table td {
 }
 .day .shift .employee-shift div {
   border-radius: 50%;
+}
+.day .shift .employee-shift .name {
+  font-size: x-small;
+  padding: 1.5px;
 }
 .day .shift .employee-shift .hours {
   font-size: xx-small;

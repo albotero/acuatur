@@ -63,4 +63,25 @@ class Month:
         self.title = 'Mayo 2022'
         self.days = days_in_month(year, month)
         self.day1 = datetime.date(year, month, 1).weekday()
+        self.year = year
+        self.month = month
         self.holidays = holidays(year, month)
+
+    def sunday_or_holiday(self, day):
+        '''Returns true if day is holiday or sunday'''
+        # Check if it is a holiday
+        if day in self.holidays:
+            return True
+
+        # Check if it is a sunday
+        date = datetime.date(self.year, self.month, day)
+        return dow[date.weekday()] == 'domingo'
+
+    def get_dow(self, selected_dow):
+        '''Returns all days in month with requested dow'''
+        days = []
+        for day in range(1, self.days + 1):
+            date = datetime.date(self.year, self.month, day)
+            if dow[5 - (date.weekday() + 7) % 7] == selected_dow:
+                days.append(day)
+        return days

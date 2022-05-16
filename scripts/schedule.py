@@ -39,9 +39,7 @@ class Shift:
             return hours
         if '_' in shift:
             return self.shift_hours[shift[-2:]]
-        if shift == 'n':
-            return self.shift_hours['n']
-        return 0
+        return self.shift_hours.get(shift, 0)
 
 
 class Schedule:
@@ -71,8 +69,58 @@ class Schedule:
             res[shift.shift].append((shift.employee_id, shift.hours))
         return res
 
-    def employee_hours(self, employee_id = None, shift = None):
+    def employee_hours(self, employee_id = None, shift = None, holidays = None):
         return sum([ x.hours for x in self.shifts if (
                             (x.employee_id == employee_id if employee_id else True) and
-                            (shift in x.shift if shift else True)
+                            (shift in x.shift if shift else True) and
+                            (self.get_month().sunday_or_holiday(x.day) if holidays else True)
                             ) ])
+
+    def summary(self):
+        titles = ['anestesiólogo', 'total horas', 'noche',
+                    'fest-dom día', 'día', 'c. externa',
+                    'u. digestiva', 'horas extra']
+        summary = []
+
+        for e in self.employees:
+            # Employee names
+            row = [e.id]
+
+            # Total hours
+            row += [self.employee_hours(employee_id = e.id)]
+
+            # Night shifts
+            row += [self.employee_hours(employee_id = e.id, shift = 'n')]
+
+            # Holiday-Sunday day shifts
+            ## All holliday/sundays (d+n) minus nights
+            hs_hours = self.employee_hours(employee_id = e.id, holidays = True)
+            hs_nights = self.employee_hours(employee_id = e.id, shift = 'n', holidays = True)
+            hs_days = hs_hours - hs_nights
+            row += [ hs_days ]
+
+            # Day shifts
+            row += [
+                self.employee_hours(employee_id = e.id, shift = 'qx_am')
+                + self.employee_hours(employee_id = e.id, shift = 'qx_pm')
+                - hs_days
+                ]
+
+            # C.E. shifts
+            row += [
+                self.employee_hours(employee_id = e.id, shift = 'ce_am')
+                + self.employee_hours(employee_id = e.id, shift = 'ce_pm')
+                ]
+
+            # U.D. shifts
+            row += [
+                self.employee_hours(employee_id = e.id, shift = 'ud_am')
+                + self.employee_hours(employee_id = e.id, shift = 'ud_pm')
+                ]
+
+            # Extra hours
+            row += [self.employee_hours(employee_id = e.id, shift = 'ex')]
+
+            summary.append(row)
+
+        return titles, summary

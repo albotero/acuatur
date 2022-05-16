@@ -28,13 +28,14 @@ def schedule():
         Employee('Pabon', 'Favio Pabón'),
         Employee('Castro', 'Jairo Castro')
     ])
-    schedule = Schedule(2022, 6, employees)
+    schedule = Schedule(2022, 5, employees)
 
-    schedule.add_shift(Shift('Botero', 2, 'qx_am'))
-    schedule.add_shift(Shift('Pabon', 3, 'n'))
+    schedule.add_shift(Shift('Botero', 1, 'qx_am'))
+    schedule.add_shift(Shift('Pabon', 8, 'qx_am'))
     schedule.add_shift(Shift('Castro', 4, 'ce_pm'))
-    schedule.add_shift(Shift('Botero', 5, 'qx_pm'))
     schedule.add_shift(Shift('Castro', 5, 'qx_pm'))
+    schedule.add_shift(Shift('Castro', 30, 'qx_pm'))
+    schedule.add_shift(Shift('Castro', 20, 'n'))
 
     tmp = '123456789'
 

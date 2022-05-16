@@ -2,14 +2,14 @@
 
 {% set month = schedule.get_month() %}
 
-{% block title %} Turnos: {{ month.titulo }} {% endblock %}
+{% block title %} Turnos: {{ month.title }} {% endblock %}
 
 {% block style %}
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/schedule.css') }}">
 {% endblock %}
 
 {% block content %}
-  <table>
+  <table class="schedule">
     <tr>
       {% for d in dow %}
         <th>{{ d }}</th>
@@ -43,6 +43,22 @@
           </td>
         {% endfor %}
       </tr>
+    {% endfor %}
+  </table>
+
+  <table class="summary">
+    {% set sum_titles, sum_rows = schedule.summary() %}
+    <tr>
+      {% for title in sum_titles %}
+        <th>{{ title }}</th>
+      {% endfor %}
+    </tr>
+    {% for row in sum_rows %}
+    <tr>
+      {% for val in row %}
+        <td>{{ val }}</td>
+      {% endfor %}
+    </tr>
     {% endfor %}
   </table>
 {% endblock %}

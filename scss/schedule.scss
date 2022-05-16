@@ -2,6 +2,39 @@ table {
   border-collapse: collapse;
   text-transform: uppercase;
   font-size: small;
+  cursor: default;
+
+  &.summary {
+    background: white;
+    padding: 10px 0 10px 10px;
+    margin-top: 20px;
+
+    th, td {
+      border: 1px solid lightgrey;
+    }
+
+    th {
+      width: 90px;
+      background: #818181;
+      color: white;
+
+      &:first-child {
+        width: 120px;
+      }
+    }
+
+    tr {
+      background: #e2e2e2;
+
+      &:nth-child(2n) {
+        background: #eee;
+      }
+
+      &:not(:first-child):hover {
+        background: coral;
+      }
+    }
+  }
 
   td {
     width: 100px;
@@ -10,12 +43,36 @@ table {
   }
 }
 
+@media(min-width: 728px) {
+  table.schedule {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  table.summary {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+
+    tr :nth-child(n+3) {
+        display: none;
+    }
+
+    &:hover tr :nth-child(n+3) {
+      display: table-cell;
+    }
+  }
+}
+
 .day {
   background: white;
   border-radius: 10px;
+  margin: 5px 1px;
 
   &.holiday {
-    background: #FEC3C3;
+    background: #FFD4D4;
   }
 
   .title {
@@ -48,7 +105,8 @@ table {
       }
 
       .name {
-
+        font-size: x-small;
+        padding: 1.5px;
       }
 
       .hours {
