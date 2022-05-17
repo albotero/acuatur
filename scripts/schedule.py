@@ -81,7 +81,11 @@ class Schedule:
         return sum([ x.hours for x in self.shifts if (
                             (x.employee_id == employee_id if employee_id else True) and
                             (shift in x.shift if shift else True) and
-                            (self.get_month().sunday_or_holiday(x.day) if holidays else True)
+                            (self.get_month().sunday_or_holiday(x.day)
+                                if holidays
+                                else (not self.get_month().sunday_or_holiday(x.day))
+                                    if holidays == False
+                                    else True)
                             ) ])
 
     def summary(self):
@@ -101,18 +105,17 @@ class Schedule:
             row += [self.employee_hours(employee_id = e.id, shift = 'n')]
 
             # Holiday-Sunday day shifts
-            ## All holliday/sundays (d+n) minus nights and extra
-            hs_hours = self.employee_hours(employee_id = e.id, holidays = True)
-            hs_nights = self.employee_hours(employee_id = e.id, shift = 'n', holidays = True)
-            hs_extra = self.employee_hours(employee_id = e.id, shift = 'ex', holidays = True)
-            hs_days = hs_hours - hs_nights - hs_extra
-            row += [ hs_days ]
+            holiday_sunday = (
+                self.employee_hours(employee_id = e.id, shift = 'qx_am', holidays = True) +
+                self.employee_hours(employee_id = e.id, shift = 'qx_pm', holidays = True)
+                )
+            row += [ holiday_sunday ]
 
             # Day shifts
             row += [
                 self.employee_hours(employee_id = e.id, shift = 'qx_am')
                 + self.employee_hours(employee_id = e.id, shift = 'qx_pm')
-                - hs_days
+                - holiday_sunday
                 ]
 
             # C.E. shifts

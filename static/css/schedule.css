@@ -64,9 +64,14 @@ table td {
   background: white;
   border-radius: 10px;
   margin: 5px 1px;
+  padding-top: 5px;
 }
 .day.holiday {
-  background: #FFD4D4;
+  background: #FDD;
+  color: #CE0E0E;
+}
+.day.holiday .shift {
+  border-color: #CE0E0E;
 }
 .day .title {
   font-weight: bold;

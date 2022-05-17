@@ -78,9 +78,15 @@ table {
   background: white;
   border-radius: 10px;
   margin: 5px 1px;
+  padding-top: 5px;
 
   &.holiday {
-    background: #FFD4D4;
+    background: #FDD;
+    color: #CE0E0E;
+
+    .shift {
+      border-color: #CE0E0E;
+    }
   }
 
   .title {

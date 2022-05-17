@@ -34,7 +34,8 @@ employees = ([
     Employee('alvarez', 'Danik Álvarez'),
     Employee('castro', 'Jairo Castro'),
     Employee('botero', 'Alejandro Botero'),
-    Employee('jf. orozco', 'Johann Orozco')
+    Employee('jf. orozco', 'Johann Orozco'),
+    Employee('vaisman', 'Vaisman')
 ])
 employees.sort(key=lambda x: x.id)
 sched = Schedule(2022, 4, employees)
