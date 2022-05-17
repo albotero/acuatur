@@ -37,7 +37,7 @@ employees = ([
     Employee('jf. orozco', 'Johann Orozco')
 ])
 employees.sort(key=lambda x: x.id)
-sched = Schedule(2022, 6, employees)
+sched = Schedule(2022, 4, employees)
 tmp = '123456789'
 
 

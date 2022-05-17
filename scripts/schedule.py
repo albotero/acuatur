@@ -138,6 +138,14 @@ class Schedule:
             totals += [ sum([ summary[x][i] for x in range(len(summary)) ]) ]
         summary.append(totals)
 
+        for a in range(len(summary)):
+            summary[a][1] = f'{summary[a][1]} H' # Totales
+            summary[a][-1] = f'{summary[a][-1]} H' # Extras
+            for b in range(2, len(summary[0]) - 1):
+                total_shifts = summary[a][b] / 12
+                total_shifts = int(total_shifts) if float(total_shifts).is_integer() else total_shifts
+                summary[a][b] = f'{total_shifts}: {summary[a][b]} H'
+
         return titles, summary
 
     def summary_html(self):
