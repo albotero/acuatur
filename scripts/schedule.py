@@ -132,6 +132,12 @@ class Schedule:
 
             summary.append(row)
 
+        # Row of totals
+        totals = [ 'Total' ]
+        for i in range(1, len(summary[0])):
+            totals += [ sum([ summary[x][i] for x in range(len(summary)) ]) ]
+        summary.append(totals)
+
         return titles, summary
 
     def summary_html(self):

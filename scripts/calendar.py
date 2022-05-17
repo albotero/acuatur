@@ -4,6 +4,8 @@ import datetime
 from dateutil.easter import easter
 
 dow = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
+moy = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio',
+        'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']
 
 def leap_year(year):
     if year % 400 == 0:
@@ -60,7 +62,7 @@ def holidays(year, month):
 
 class Month:
     def __init__(self, year, month):
-        self.title = 'Mayo 2022'
+        self.title = f'{moy[month - 1]} {year}'
         self.days = days_in_month(year, month)
         self.day1 = datetime.date(year, month, 1).weekday()
         self.year = year

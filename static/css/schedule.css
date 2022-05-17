@@ -50,6 +50,9 @@ table td {
     top: 10px;
     right: 10px;
   }
+  table.summary tr:last-child {
+    font-weight: bold;
+  }
   table.summary tr :nth-child(n+3) {
     display: none;
   }

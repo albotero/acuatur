@@ -58,8 +58,14 @@ table {
     top: 10px;
     right: 10px;
 
-    tr :nth-child(n+3) {
+    tr {
+      &:last-child {
+        font-weight: bold;
+      }
+
+      :nth-child(n+3) {
         display: none;
+      }
     }
 
     &:hover tr :nth-child(n+3) {
