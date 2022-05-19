@@ -1,11 +1,11 @@
 var socket = io();
-var dict_update = {'tmp': tmp};
+var dict_update = {'schedule_id': schedule_id};
 
 function send_update() {
   // Send data to server
   socket.emit('update_schedule', dict_update);
   // Reset changes
-  dict_update = {'tmp': tmp};
+  dict_update = {'schedule_id': schedule_id};
 }
 
 socket.on('response', function(data) {

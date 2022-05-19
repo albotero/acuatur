@@ -53,7 +53,7 @@
 
 {% block scripts %}
   <script type="text/javascript">
-    const tmp = '{{ tmp }}';
+    const schedule_id = '{{ schedule.id }}';
     const month = '{{ month.title }}';
     const anestesiologos = {{ employees | safe }};
     const shift_hours = {{ shift_hours | safe }};

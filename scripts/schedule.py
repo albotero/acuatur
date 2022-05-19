@@ -2,12 +2,12 @@
 
 from scripts.calendar import Month
 import uuid
+import pickle
 
 class Employee:
 
-    def __init__(self, id, name):
-        self.id = id
-        self.name = name
+    def __init__(self, employee):
+        self.id, self.name = employee
 
 
 class Shift:
@@ -34,7 +34,7 @@ class Shift:
         self.day = day
         self.shift = shift
         self.hours = self.get_shift_hours(shift, hours)
-        self.id = id if id else uuid.uuid4().hex
+        self.id = uuid.uuid4().hex
 
     def get_shift_hours(self, shift, hours):
         if hours:
@@ -46,11 +46,14 @@ class Shift:
 
 class Schedule:
 
-    def __init__(self, year, month, employees):
+    def __init__(self, year, month, employees, id=None):
         self.year = year
         self.month = month
-        self.employees = employees
+        employees.sort(key=lambda x: x[0])
+        self.employees = [ Employee(x) for x in employees ]
         self.shifts = []
+        self.id = uuid.uuid4().hex
+        self.save_to_file(self.id)
 
     def get_month(self):
         return Month(self.year, self.month)
@@ -166,3 +169,16 @@ class Schedule:
             html += '</tr>'
 
         return html
+
+    def save_to_file(self, filename):
+        '''Serializes all schedule and saves it to a file'''
+        # Open a file and use dump()
+        with open(f'schedules/{filename}', 'wb') as file:
+            pickle.dump(self, file)
+
+    def load_from_file(filename):
+        '''Loads a serialized schedule from a file'''
+        # Open the file in binary mode
+        with open(f'schedules/{filename}', 'rb') as file:
+            # Call load method to deserialze
+            return pickle.load(file)

@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 
 from scripts.calendar import dow
-from scripts.schedule import Employee, Shift, Schedule
+from scripts.schedule import Schedule, Shift
 
 import os
 
@@ -15,33 +15,6 @@ socketio = SocketIO(app, cors_allowed_origins = '*', async_mode='gevent') #, log
 
 os.chdir(os.path.dirname(__file__))
 
-
-employees = ([
-    Employee('naranjo', 'Naranjo'),
-    Employee('bolaños', 'Jaime Bolaños'),
-    Employee('cardona', 'Eduin Cardona'),
-    Employee('pabon', 'Favio Pabón'),
-    Employee('mera', 'Soraya Mera'),
-    Employee('m. orozco', 'Mario Orozco'),
-    Employee('posso', 'Mónica Posso'),
-    Employee('arroyave', 'Julián Arroyave'),
-    Employee('vallejos', 'Lorena Vallejos'),
-    Employee('benjumea', 'Angélica Benjumea'),
-    Employee('morales', 'Maryurin Morales'),
-    Employee('serna', 'Ana Milena Serna'),
-    Employee('rosillo', 'Andrés Rosillo'),
-    Employee('gallego', 'Gallego'),
-    Employee('alvarez', 'Danik Álvarez'),
-    Employee('castro', 'Jairo Castro'),
-    Employee('botero', 'Alejandro Botero'),
-    Employee('jf. orozco', 'Johann Orozco'),
-    Employee('vaisman', 'Vaisman')
-])
-employees.sort(key=lambda x: x.id)
-sched = Schedule(2022, 4, employees)
-tmp = '123456789'
-
-
 @app.route('/')
 def index():
     # Verifica que esté loggeado
@@ -49,21 +22,60 @@ def index():
         return redirect(url_for('schedule'))
 
 @app.route('/schedule')
-def schedule():
+def new_schedule():
+    employees = ([
+        ('naranjo', 'Naranjo'),
+        ('bolaños', 'Jaime Bolaños'),
+        ('cardona', 'Eduin Cardona'),
+        ('pabon', 'Favio Pabón'),
+        ('mera', 'Soraya Mera'),
+        ('m. orozco', 'Mario Orozco'),
+        ('posso', 'Mónica Posso'),
+        ('arroyave', 'Julián Arroyave'),
+        ('vallejos', 'Lorena Vallejos'),
+        ('benjumea', 'Angélica Benjumea'),
+        ('morales', 'Maryurin Morales'),
+        ('serna', 'Ana Milena Serna'),
+        ('rosillo', 'Andrés Rosillo'),
+        ('gallego', 'Gallego'),
+        ('alvarez', 'Danik Álvarez'),
+        ('castro', 'Jairo Castro'),
+        ('botero', 'Alejandro Botero'),
+        ('jf. orozco', 'Johann Orozco'),
+        ('vaisman', 'Vaisman'),
+        ('pardo', 'Hernán Pardo')
+    ])
+    sched = Schedule(2022, 4, employees)
+    return redirect(url_for('.schedule', filename=sched.id))
+
+@app.route('/schedule/<filename>')
+def schedule(filename):
+    if os.path.exists(f'schedules/{filename}'):
+        # Load schedule
+        sched = Schedule.load_from_file(filename)
+    else:
+        # Create new schedule and redirect to the new schedule
+        return redirect(url_for('.new_schedule'))
+
+    employees = sched.employees
     empl = {}
     for e in employees:
         empl[e.id] = e.name
+
     return render_template('schedule.html',
-                            tmp=tmp,
                             dow=dow,
                             shifts=Shift.shifts,
                             shift_hours=Shift.shift_hours,
                             schedule=sched,
-                            employees = empl)
+                            employees=empl)
 
 @socketio.on('update_schedule')
 def update_schedule(data):
     try:
+        # Load existing data
+        filename = data.get('schedule_id')
+        sched = Schedule.load_from_file(filename)
+
         res = {}
 
         if data.get('rem'):
@@ -76,6 +88,9 @@ def update_schedule(data):
                         data['add']['shift'],
                         hours = data['add']['hours']
                         )
+
+        # Update schedule
+        sched.save_to_file(filename)
 
         res['result'] = 'ok'
         res['summary'] = sched.summary_html()
