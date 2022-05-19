@@ -10,11 +10,16 @@
 
 {% block content %}
   <table class="schedule">
-    <tr>
-      {% for d in dow %}
-        <th>{{ d }}</th>
-      {% endfor %}
-    </tr>
+    <thead>
+      <tr>
+        <th colspan="7" class=".month-title">Turnos: {{ month.title }}</th>
+      </tr>
+      <tr>
+        {% for d in dow %}
+          <th>{{ d }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
     {% for w in range((month.days + month.day1) // 7 + 1) %}
       <tr>
         {% for d in range(7) %}
@@ -26,7 +31,7 @@
               <div class="day{{ holiday }}">
                 <div class="title">{{ day }}</div>
                 {% for shift, employees in schedule.employees_in_day(day).items() %}
-                  <div class="shift {{ shift }}" id="{{ day }}-{{ shift }}">
+                  <div class="shift noprint {{ shift }}" id="{{ day }}-{{ shift }}">
                     <div class="title">{{ shifts.get(shift) }}</div>
                     {% for employee in employees %}
                       <div class="employee-shift" id="{{ employee[0] }}">
@@ -47,6 +52,9 @@
   </table>
 
   <table class="summary">
+    <thead>
+      <th colspan="8">Total de Horas</th>
+    </thead>
     {{ schedule.summary_html() | safe }}
   </table>
 {% endblock %}

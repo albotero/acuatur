@@ -1,9 +1,21 @@
+body {
+  font-size: 14px;
+}
+
 table {
   border-collapse: collapse;
   text-transform: uppercase;
   font-size: small;
   cursor: default;
   margin: 0 auto;
+}
+table thead tr:first-child th:first-child {
+  background: #fff !important;
+  border: none !important;
+  color: black;
+}
+table th.month-title {
+  font-size: 18px;
 }
 table.summary {
   background: white;
@@ -64,14 +76,16 @@ table td {
   background: white;
   border-radius: 10px;
   margin: 5px 1px;
-  padding-top: 5px;
+}
+.day > .title {
+  padding: 3px;
 }
 .day.holiday {
-  background: #FDD;
-  color: #CE0E0E;
+  background: #FDD !important;
+  color: #CE0E0E !important;
 }
 .day.holiday .shift {
-  border-color: #CE0E0E;
+  border-color: #CE0E0E !important;
 }
 .day .title {
   font-weight: bold;
@@ -165,6 +179,51 @@ form table tr td {
 }
 form table tr td input[type=number] {
   width: 60px;
+}
+form table tr td select {
+  max-width: 150px;
+  text-transform: capitalize;
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 0.75cm;
+  }
+  body {
+    font-size: 10pt;
+    background: #fff !important;
+  }
+
+  .noprint, .del, .hours, .add {
+    display: none;
+  }
+
+  table {
+    page-break-inside: auto;
+    page-break-after: always;
+    line-height: 1.2;
+  }
+  table thead {
+    display: table-header-group;
+    line-height: 2;
+  }
+  table thead tr:first-child {
+    font-size: 12pt;
+  }
+  table thead tr:first-child th:first-child {
+    background: transparent;
+    color: black;
+  }
+  table tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .shift {
+    font-size: 7pt;
+    line-height: 0.85;
+  }
 }
 
 /*# sourceMappingURL=schedule.css.map */

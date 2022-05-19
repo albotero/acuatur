@@ -24,26 +24,26 @@ def index():
 @app.route('/schedule')
 def new_schedule():
     employees = ([
-        ('naranjo', 'Naranjo'),
-        ('bolaños', 'Jaime Bolaños'),
-        ('cardona', 'Eduin Cardona'),
-        ('pabon', 'Favio Pabón'),
-        ('mera', 'Soraya Mera'),
-        ('m. orozco', 'Mario Orozco'),
-        ('posso', 'Mónica Posso'),
-        ('arroyave', 'Julián Arroyave'),
-        ('vallejos', 'Lorena Vallejos'),
-        ('benjumea', 'Angélica Benjumea'),
-        ('morales', 'Maryurin Morales'),
-        ('serna', 'Ana Milena Serna'),
-        ('rosillo', 'Andrés Rosillo'),
-        ('gallego', 'Gallego'),
-        ('alvarez', 'Danik Álvarez'),
-        ('castro', 'Jairo Castro'),
-        ('botero', 'Alejandro Botero'),
-        ('jf. orozco', 'Johann Orozco'),
-        ('vaisman', 'Vaisman'),
-        ('pardo', 'Hernán Pardo')
+        ('alvarez', 'Danik Liliana Álvarez Pilimur'),
+        ('arroyave', 'Julián Andrés Arroyave Gordillo'),
+        ('benjumea', 'Angélica María Benjumea Marulanda'),
+        ('botero', 'Alejandro Botero Fernández'),
+        ('cardona', 'Eduin Yadir Cardona Aristizábal'),
+        ('castro', 'Jairo Andres Castro Peñaloza'),
+        ('pabon', 'Favio Ernesto Pabón Muñoz'),
+        ('knudson', 'Jorge Knudson  '),
+        ('mera', 'Soraya Mera Cerón'),
+        ('morales', 'Maryurin Morales Saavedra'),
+        ('naranjo', 'Miguel Antonio Naranjo Hoyos'),
+        ('pardo', 'Wilber Hernán Pardo Díaz'),
+        ('posso', 'Mónica Alexandra Posso Ponce'),
+        ('alfaro', 'Jorge Andrés Alfaro'),
+        ('rosillo', 'Luis Andrés Rosillo Meneses'),
+        ('serna', 'Ana Milena Serna Murillo'),
+        ('m. orozco', 'Mario Germán Orozco'),
+        ('vaisman', 'Liviu Vaisman Romelt'),
+        ('jf. orozco', 'Johann Fernando Orozco Castro'),
+        ('guevara', 'Paula Alejandra Guevara')
     ])
     sched = Schedule(2022, 4, employees)
     return redirect(url_for('.schedule', filename=sched.id))

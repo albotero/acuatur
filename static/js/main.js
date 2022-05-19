@@ -35,6 +35,18 @@ function rem_shift(obj) {
   send_update();
 }
 
+function toggle_printable() {
+  $('.shift').each(function() {
+    console.log($(this).children().length);
+    if ($(this).children().length > 2)
+      $(this).removeClass('noprint');
+    else
+      $(this).addClass('noprint');
+  });
+}
+
+toggle_printable();
+
 function add_shift(obj) {
   var day = $(obj).parent().siblings('.title').text();
   var shift = $(obj).parent().attr("class").split(' ')[1];
@@ -55,7 +67,7 @@ function add_shift(obj) {
           <select name="employee_id">`;
 
   for (const [key, value] of Object.entries(anestesiologos)) {
-    html += `<option value="${key}">${value}</option>`
+    html += `<option value="${key}">${key} - ${value}&nbsp;&nbsp;</option>`
   }
 
   html += `</select>
