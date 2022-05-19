@@ -2,6 +2,10 @@ body {
   font-size: 14px;
 }
 
+div.tables table {
+  margin-bottom: 40px;
+}
+
 table {
   border-collapse: collapse;
   text-transform: uppercase;
@@ -13,34 +17,32 @@ table thead tr:first-child th:first-child {
   background: #fff !important;
   border: none !important;
   color: black;
+  font-size: 16px;
 }
-table th.month-title {
-  font-size: 18px;
-}
-table.summary {
+table.summary, table.cext {
   background: white;
   padding: 10px 0 10px 10px;
   margin-top: 20px;
 }
-table.summary th, table.summary td {
+table.summary th, table.summary td, table.cext th, table.cext td {
   border: 1px solid lightgrey;
 }
-table.summary th {
+table.summary th, table.cext th {
   width: 90px;
   background: #818181;
   color: white;
   padding: 5px 2px;
 }
-table.summary th:first-child {
+table.summary th:first-child, table.cext th:first-child {
   width: 120px;
 }
-table.summary tr {
+table.summary tr, table.cext tr {
   background: #e2e2e2;
 }
-table.summary tr:nth-child(2n) {
+table.summary tr:nth-child(2n), table.cext tr:nth-child(2n) {
   background: #eee;
 }
-table.summary tr:not(:first-child):hover {
+table.summary tr:not(:first-child):hover, table.cext tr:not(:first-child):hover {
   background: coral;
 }
 table td {
@@ -50,7 +52,7 @@ table td {
 }
 
 @media (min-width: 1024px) {
-  table.schedule {
+  div.tables {
     position: absolute;
     top: 20px;
     left: 50%;
@@ -223,6 +225,7 @@ form table tr td select {
   .shift {
     font-size: 7pt;
     line-height: 0.85;
+    margin-top: 0;
   }
 }
 

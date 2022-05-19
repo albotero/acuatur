@@ -9,47 +9,72 @@
 {% endblock %}
 
 {% block content %}
-  <table class="schedule">
-    <thead>
-      <tr>
-        <th colspan="7" class=".month-title">Turnos: {{ month.title }}</th>
-      </tr>
-      <tr>
-        {% for d in dow %}
-          <th>{{ d }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    {% for w in range((month.days + month.day1) // 7 + 1) %}
-      <tr>
-        {% for d in range(7) %}
-          <td>
-            {% set day = w * 7 - month.day1 + d + 1 %}
-            {% set holiday = ' holiday' if day in month.holidays or dow[d] == 'domingo' else '' %}
+  <div class="tables">
+    <table class="schedule">
+      <thead>
+        <tr>
+          <th colspan="7">Turnos: {{ month.title }}</th>
+        </tr>
+        <tr>
+          {% for d in dow %}
+            <th>{{ d }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      {% for w in range((month.days + month.day1) // 7 + 1) %}
+        <tr>
+          {% for d in range(7) %}
+            <td>
+              {% set day = w * 7 - month.day1 + d + 1 %}
+              {% set holiday = ' holiday' if day in month.holidays or dow[d] == 'domingo' else '' %}
 
-            {% if 1 <= day <= month['days'] %}
-              <div class="day{{ holiday }}">
-                <div class="title">{{ day }}</div>
-                {% for shift, employees in schedule.employees_in_day(day).items() %}
-                  <div class="shift noprint {{ shift }}" id="{{ day }}-{{ shift }}">
-                    <div class="title">{{ shifts.get(shift) }}</div>
-                    {% for employee in employees %}
-                      <div class="employee-shift" id="{{ employee[0] }}">
-                        <div class="del" onclick="rem_shift(this);">x</div>
-                        <div class="employee_id">{{ employee[1] }}</div>
-                        <div class="hours">{{ employee[2] }}</div>
-                      </div>
-                    {% endfor %}
-                    <div class="add" onclick="add_shift(this);">+</div>
-                  </div>
-                {% endfor %}
-              </div>
-            {% endif %}
-          </td>
-        {% endfor %}
+              {% if 1 <= day <= month['days'] %}
+                <div class="day{{ holiday }}">
+                  <div class="title">{{ day }}</div>
+                  {% for shift, employees in schedule.employees_in_day(day).items() %}
+                    <div class="shift noprint {{ shift }}" id="{{ day }}-{{ shift }}">
+                      <div class="title">{{ shifts.get(shift) }}</div>
+                      {% for employee in employees %}
+                        <div class="employee-shift" id="{{ employee[0] }}">
+                          <div class="del" onclick="rem_shift(this);">x</div>
+                          <div class="employee_id">{{ employee[1] }}</div>
+                          <div class="hours">{{ employee[2] }}</div>
+                        </div>
+                      {% endfor %}
+                      <div class="add" onclick="add_shift(this);">+</div>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </table>
+
+    <table class="cext">
+      <thead>
+        <tr>
+          <th colspan="4">Consulta Externa: {{ month.title }}</th>
+        </tr>
+        <tr>
+          <th>D&iacute;a</th>
+          <th>Anestesi&oacute;logo</th>
+          <th>Horario</th>
+          <th>Horas</th>
+        </tr>
+      </thead>
+      {% for ce in schedule.summary_cext(): %}
+      <tr>
+        {% set ce_day, ce_date, ce_employee, ce_shift, ce_hours = ce %}
+        <td>{{ ce_date }}</td>
+        <td>{{ ce_employee }}</td>
+        <td>{{ ce_shift }}</td>
+        <td>{{ ce_hours }} horas</td>
       </tr>
-    {% endfor %}
-  </table>
+      {% endfor %}
+    </table>
+  </div>
 
   <table class="summary">
     <thead>

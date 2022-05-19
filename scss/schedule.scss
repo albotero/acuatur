@@ -2,6 +2,10 @@ body {
     font-size: 14px;
 }
 
+div.tables table {
+    margin-bottom: 40px;
+}
+
 table {
   border-collapse: collapse;
   text-transform: uppercase;
@@ -13,13 +17,10 @@ table {
     background: #fff !important;
     border: none !important;
     color: black;
+    font-size: 16px;
   }
 
-  th.month-title {
-    font-size: 18px;
-  }
-
-  &.summary {
+  &.summary, &.cext {
     background: white;
     padding: 10px 0 10px 10px;
     margin-top: 20px;
@@ -60,7 +61,7 @@ table {
 }
 
 @media(min-width: 1024px) {
-  table.schedule {
+  div.tables {
     position: absolute;
     top: 20px;
     left: 50%;
@@ -265,5 +266,6 @@ form table {
   .shift {
     font-size: 7pt;
     line-height: 0.85;
+    margin-top: 0;
   }
 }

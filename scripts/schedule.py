@@ -170,6 +170,19 @@ class Schedule:
 
         return html
 
+    def summary_cext(self):
+        '''Returns list of tuples with day, employee, shift, hours in cext'''
+        cext = []
+        for shift in self.shifts:
+            if 'ce' in shift.shift:
+                cext.append( (shift.day,
+                              f'{shift.day}/{self.month}/{self.year}',
+                              shift.employee_id,
+                              shift.shift[-2:],
+                              shift.hours) )
+        cext.sort(key=lambda x: x[0])
+        return cext
+
     def save_to_file(self, filename):
         '''Serializes all schedule and saves it to a file'''
         # Open a file and use dump()
