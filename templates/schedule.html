@@ -6,6 +6,9 @@
 
 {% block style %}
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/schedule.css') }}">
+  <style media="print">
+    thead tr:first-child th:first-child:after { content: ": {{ month.title }}"; }
+  </style>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +16,7 @@
     <table class="schedule">
       <thead>
         <tr>
-          <th colspan="7">Turnos: {{ month.title }}</th>
+          <th colspan="7">Turnos</th>
         </tr>
         <tr>
           {% for d in dow %}
@@ -32,7 +35,7 @@
                 <div class="day{{ holiday }}">
                   <div class="title">{{ day }}</div>
                   {% for shift, employees in schedule.employees_in_day(day).items() %}
-                    <div class="shift noprint {{ shift }}" id="{{ day }}-{{ shift }}">
+                    <div class="shift {{ shift }} noprint" id="{{ day }}-{{ shift }}">
                       <div class="title">{{ shifts.get(shift) }}</div>
                       {% for employee in employees %}
                         <div class="employee-shift" id="{{ employee[0] }}">
@@ -53,33 +56,11 @@
     </table>
 
     <table class="cext">
-      <thead>
-        <tr>
-          <th colspan="4">Consulta Externa: {{ month.title }}</th>
-        </tr>
-        <tr>
-          <th>D&iacute;a</th>
-          <th>Anestesi&oacute;logo</th>
-          <th>Horario</th>
-          <th>Horas</th>
-        </tr>
-      </thead>
-      {% for ce in schedule.summary_cext(): %}
-      <tr>
-        {% set ce_day, ce_date, ce_employee, ce_shift, ce_hours = ce %}
-        <td>{{ ce_date }}</td>
-        <td>{{ ce_employee }}</td>
-        <td>{{ ce_shift }}</td>
-        <td>{{ ce_hours }} horas</td>
-      </tr>
-      {% endfor %}
+      {{ schedule.summary_cext() | safe }}
     </table>
   </div>
 
   <table class="summary">
-    <thead>
-      <th colspan="8">Total de Horas</th>
-    </thead>
     {{ schedule.summary_html() | safe }}
   </table>
 {% endblock %}

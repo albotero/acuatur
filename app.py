@@ -94,6 +94,7 @@ def update_schedule(data):
 
         res['result'] = 'ok'
         res['summary'] = sched.summary_html()
+        res['cext'] = sched.summary_cext()
 
         emit('response', res)
     except Exception as ex:

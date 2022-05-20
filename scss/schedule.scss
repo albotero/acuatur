@@ -1,5 +1,8 @@
 body {
     font-size: 14px;
+    padding: 10px 10px 10px 20px;    
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
 }
 
 div.tables table {
@@ -18,6 +21,10 @@ table {
     border: none !important;
     color: black;
     font-size: 16px;
+  }
+
+  &.summary tr:last-child {
+    font-weight: bold;
   }
 
   &.summary, &.cext {
@@ -40,14 +47,14 @@ table {
       }
     }
 
-    tr {
-      background: #e2e2e2;
+    tbody tr {
+      background: #eee;
 
       &:nth-child(2n) {
-        background: #eee;
+        background: #e2e2e2;
       }
 
-      &:not(:first-child):hover {
+      &:hover {
         background: coral;
       }
     }
@@ -73,14 +80,8 @@ table {
     top: 10px;
     right: 10px;
 
-    tr {
-      &:last-child {
-        font-weight: bold;
-      }
-
-      :nth-child(n+3) {
+    tr :nth-child(n+3) {
         display: none;
-      }
     }
 
     &:hover tr :nth-child(n+3) {
@@ -225,12 +226,11 @@ form table {
 
 @media print {
   @page {
-    size: auto;
-    margin: 0.75cm;
+    margin: 0.5cm 1cm;
   }
 
   body {
-    font-size: 10pt;
+    font-size: 9pt !important;
     background: #fff !important;
   }
 
@@ -241,11 +241,11 @@ form table {
   table {
     page-break-inside: auto;
     page-break-after: always;
-    line-height: 1.2;
+    line-height: 1;
 
     thead {
       display: table-header-group;
-      line-height: 2;
+      line-height: 1.5;
 
       tr:first-child {
         font-size: 12pt;
@@ -257,15 +257,29 @@ form table {
       }
     }
 
-    tr {
+    &:not(.schedule) tr {
       page-break-inside: avoid;
       page-break-after: auto;
+      line-height: 1.6;
     }
   }
 
-  .shift {
-    font-size: 7pt;
-    line-height: 0.85;
-    margin-top: 0;
+  .day {
+    margin: 0.5mm 1mm;
+
+    > .title {
+      padding-top: 0.5mm;
+    }
+
+    .shift {
+      margin-top: 1.5mm;
+      padding: 0.75mm;
+
+      .employee_id {
+        font-size: 7pt;
+        padding: 0 1mm;
+        line-height: 0.8;
+      }
+    }
   }
 }

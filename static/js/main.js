@@ -16,6 +16,8 @@ socket.on('response', function(data) {
   }
   // Update summary
   $('table.summary').html(data['summary']);
+  // Update summary
+  $('table.cext').html(data['cext']);
   // Add shifts if apply
   if ('add' in data) {
     shift_html = `
@@ -37,7 +39,6 @@ function rem_shift(obj) {
 
 function toggle_printable() {
   $('.shift').each(function() {
-    console.log($(this).children().length);
     if ($(this).children().length > 2)
       $(this).removeClass('noprint');
     else

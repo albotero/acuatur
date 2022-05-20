@@ -157,10 +157,17 @@ class Schedule:
     def summary_html(self):
         sum_titles, sum_rows = self.summary()
 
-        html = '<tr>'
+        html = '''
+            <thead>
+              <th colspan="8">Total Horas</th>
+            <tr>
+            '''
         for title in sum_titles:
             html += f'<th>{title}</th>'
-        html += '</tr>'
+        html += '''
+                </tr>
+            </thead>
+            '''
 
         for row in sum_rows:
             html += '<tr>'
@@ -181,7 +188,28 @@ class Schedule:
                               shift.shift[-2:],
                               shift.hours) )
         cext.sort(key=lambda x: x[0])
-        return cext
+
+        html = '''
+            <thead>
+              <th colspan="4">Consulta Externa</th>
+              <tr>
+                  <th>D&iacute;a</th>
+                  <th>Anestesi&oacute;logo</th>
+                  <th>Horario</th>
+                  <th>Horas</th>
+              </tr>
+            </thead>
+            '''
+        for ce_day, ce_date, ce_employee, ce_shift, ce_hours in cext:
+            html += f'''
+                <tr>
+                  <td>{ce_date}</td>
+                  <td>{ce_employee}</td>
+                  <td>{ce_shift}</td>
+                  <td>{ce_hours} horas</td>
+                </tr>
+                '''
+        return html
 
     def save_to_file(self, filename):
         '''Serializes all schedule and saves it to a file'''

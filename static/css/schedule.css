@@ -1,5 +1,8 @@
 body {
   font-size: 14px;
+  padding: 10px 10px 10px 20px;
+  -webkit-print-color-adjust: exact;
+  color-adjust: exact;
 }
 
 div.tables table {
@@ -19,6 +22,9 @@ table thead tr:first-child th:first-child {
   color: black;
   font-size: 16px;
 }
+table.summary tr:last-child {
+  font-weight: bold;
+}
 table.summary, table.cext {
   background: white;
   padding: 10px 0 10px 10px;
@@ -36,13 +42,13 @@ table.summary th, table.cext th {
 table.summary th:first-child, table.cext th:first-child {
   width: 120px;
 }
-table.summary tr, table.cext tr {
-  background: #e2e2e2;
-}
-table.summary tr:nth-child(2n), table.cext tr:nth-child(2n) {
+table.summary tbody tr, table.cext tbody tr {
   background: #eee;
 }
-table.summary tr:not(:first-child):hover, table.cext tr:not(:first-child):hover {
+table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n) {
+  background: #e2e2e2;
+}
+table.summary tbody tr:hover, table.cext tbody tr:hover {
   background: coral;
 }
 table td {
@@ -63,9 +69,6 @@ table td {
     position: fixed;
     top: 10px;
     right: 10px;
-  }
-  table.summary tr:last-child {
-    font-weight: bold;
   }
   table.summary tr :nth-child(n+3) {
     display: none;
@@ -189,11 +192,10 @@ form table tr td select {
 
 @media print {
   @page {
-    size: auto;
-    margin: 0.75cm;
+    margin: 0.5cm 1cm;
   }
   body {
-    font-size: 10pt;
+    font-size: 9pt !important;
     background: #fff !important;
   }
 
@@ -204,11 +206,11 @@ form table tr td select {
   table {
     page-break-inside: auto;
     page-break-after: always;
-    line-height: 1.2;
+    line-height: 1;
   }
   table thead {
     display: table-header-group;
-    line-height: 2;
+    line-height: 1.5;
   }
   table thead tr:first-child {
     font-size: 12pt;
@@ -217,15 +219,26 @@ form table tr td select {
     background: transparent;
     color: black;
   }
-  table tr {
+  table:not(.schedule) tr {
     page-break-inside: avoid;
     page-break-after: auto;
+    line-height: 1.6;
   }
 
-  .shift {
+  .day {
+    margin: 0.5mm 1mm;
+  }
+  .day > .title {
+    padding-top: 0.5mm;
+  }
+  .day .shift {
+    margin-top: 1.5mm;
+    padding: 0.75mm;
+  }
+  .day .shift .employee_id {
     font-size: 7pt;
-    line-height: 0.85;
-    margin-top: 0;
+    padding: 0 1mm;
+    line-height: 0.8;
   }
 }
 
