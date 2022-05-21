@@ -17,9 +17,10 @@ os.chdir(os.path.dirname(__file__))
 
 @app.route('/')
 def index():
+    return render_template('index.html')
     # Verifica que esté loggeado
     if 'user' not in session:
-        return redirect(url_for('schedule'))
+        return redirect(url_for('login'))
 
 @app.route('/schedule')
 def new_schedule():
@@ -45,7 +46,7 @@ def new_schedule():
         ('jf. orozco', 'Johann Fernando Orozco Castro'),
         ('guevara', 'Paula Alejandra Guevara')
     ])
-    sched = Schedule(2022, 4, employees)
+    sched = Schedule(2022, 4, 'Anestesiólogos', employees)
     return redirect(url_for('.schedule', filename=sched.id))
 
 @app.route('/schedule/<filename>')
@@ -95,6 +96,7 @@ def update_schedule(data):
         res['result'] = 'ok'
         res['summary'] = sched.summary_html()
         res['cext'] = sched.summary_cext()
+        res['extra'] = sched.summary_extra()
 
         emit('response', res)
     except Exception as ex:

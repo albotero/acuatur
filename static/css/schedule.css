@@ -5,6 +5,12 @@ body {
   color-adjust: exact;
 }
 
+div.tables .month {
+  font-size: 24px;
+  font-weight: bolder;
+  text-align: center;
+  padding: 8px 0 20px 0;
+}
 div.tables table {
   margin-bottom: 40px;
 }
@@ -16,40 +22,43 @@ table {
   cursor: default;
   margin: 0 auto;
 }
+table:empty {
+  display: none;
+}
 table thead tr:first-child th:first-child {
-  background: #fff !important;
+  background: #eee !important;
   border: none !important;
-  color: black;
+  color: #000;
   font-size: 16px;
+  padding-bottom: 3px;
 }
 table.summary tr:last-child {
   font-weight: bold;
 }
-table.summary, table.cext {
-  background: white;
+table.summary, table.cext, table.extra {
   padding: 10px 0 10px 10px;
   margin-top: 20px;
 }
-table.summary th, table.summary td, table.cext th, table.cext td {
+table.summary th, table.summary td, table.cext th, table.cext td, table.extra th, table.extra td {
   border: 1px solid lightgrey;
 }
-table.summary th, table.cext th {
+table.summary th, table.cext th, table.extra th {
   width: 90px;
   background: #818181;
   color: white;
   padding: 5px 2px;
 }
-table.summary th:first-child, table.cext th:first-child {
+table.summary th:first-child, table.cext th:first-child, table.extra th:first-child {
   width: 120px;
 }
-table.summary tbody tr, table.cext tbody tr {
+table.summary tbody tr, table.cext tbody tr, table.extra tbody tr {
   background: #eee;
 }
-table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n) {
+table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.extra tbody tr:nth-child(2n) {
   background: #e2e2e2;
 }
-table.summary tbody tr:hover, table.cext tbody tr:hover {
-  background: coral;
+table.summary tbody tr:hover, table.cext tbody tr:hover, table.extra tbody tr:hover {
+  background: #0695EC;
 }
 table td {
   width: 100px;
@@ -78,7 +87,7 @@ table td {
   }
 }
 .day {
-  background: white;
+  background: #eee;
   border-radius: 10px;
   margin: 5px 1px;
 }
@@ -130,7 +139,7 @@ table td {
   top: 1px;
   left: 5px;
   padding: 1px 1.5px;
-  color: black;
+  color: #000;
   background: #E0E0E0;
   text-align: center;
   user-select: none;
@@ -147,10 +156,10 @@ table td {
   padding: 0 3px;
 }
 .day .shift .employee-shift .del:hover {
-  background: #E3DADA;
+  background: #6CC3F7;
 }
 .day .shift .employee-shift .del:active {
-  background: #F9D2C0;
+  background: #0695EC;
 }
 .day .shift .add {
   color: darkgreen;
@@ -162,10 +171,10 @@ table td {
   border-radius: 50%;
 }
 .day .shift .add:hover {
-  background: #DAE3DE;
+  background: #6CC3F7;
 }
 .day .shift .add:active {
-  background: #C0F9D4;
+  background: #0695EC;
 }
 
 form table {
@@ -199,7 +208,7 @@ form table tr td select {
     background: #fff !important;
   }
 
-  .noprint, .del, .hours, .add {
+  .noprint, .del, .hours, .add, nav {
     display: none;
   }
 
@@ -216,8 +225,8 @@ form table tr td select {
     font-size: 12pt;
   }
   table thead tr:first-child th:first-child {
-    background: transparent;
-    color: black;
+    background: #fff !important;
+    color: #000;
   }
   table:not(.schedule) tr {
     page-break-inside: avoid;
@@ -227,6 +236,7 @@ form table tr td select {
 
   .day {
     margin: 0.5mm 1mm;
+    background: #fff !important;
   }
   .day > .title {
     padding-top: 0.5mm;

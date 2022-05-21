@@ -1,12 +1,26 @@
+$backcolor: #eee;
+$forecolor: #000;
+$active: #0695EC;
+$selected: #6CC3F7;
+
 body {
     font-size: 14px;
-    padding: 10px 10px 10px 20px;    
+    padding: 10px 10px 10px 20px;
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
 }
 
-div.tables table {
-    margin-bottom: 40px;
+div.tables {
+  .month {
+    font-size: 24px;
+    font-weight: bolder;
+    text-align: center;
+    padding: 8px 0 20px 0;
+  }
+
+  table {
+      margin-bottom: 40px;
+  }
 }
 
 table {
@@ -16,19 +30,23 @@ table {
   cursor: default;
   margin: 0 auto;
 
+  &:empty {
+    display: none;
+  }
+
   thead tr:first-child th:first-child {
-    background: #fff !important;
+    background: $backcolor !important;
     border: none !important;
-    color: black;
+    color: $forecolor;
     font-size: 16px;
+    padding-bottom: 3px;
   }
 
   &.summary tr:last-child {
     font-weight: bold;
   }
 
-  &.summary, &.cext {
-    background: white;
+  &.summary, &.cext, &.extra {
     padding: 10px 0 10px 10px;
     margin-top: 20px;
 
@@ -55,7 +73,7 @@ table {
       }
 
       &:hover {
-        background: coral;
+        background: $active;
       }
     }
   }
@@ -91,7 +109,7 @@ table {
 }
 
 .day {
-  background: white;
+  background: $backcolor;
   border-radius: 10px;
   margin: 5px 1px;
 
@@ -150,7 +168,7 @@ table {
         top: 1px;
         left: 5px;
         padding: 1px 1.5px;
-        color: black;
+        color: $forecolor;
         background: #E0E0E0;
         text-align: center;
         user-select: none;
@@ -166,14 +184,8 @@ table {
         font-variant: small-caps;
         font-size: xx-small;
         padding: 0 3px;
-
-        &:hover {
-          background: #E3DADA;
-        }
-
-        &:active {
-          background: #F9D2C0;
-        }
+        &:hover { background: $selected; }
+        &:active { background: $active; }
       }
     }
 
@@ -185,14 +197,8 @@ table {
       width: 17.5px;
       margin: auto;
       border-radius: 50%;
-
-      &:hover {
-        background: #DAE3DE;
-      }
-
-      &:active {
-        background: #C0F9D4;
-      }
+      &:hover { background: $selected; }
+      &:active { background: $active; }
     }
   }
 }
@@ -234,7 +240,7 @@ form table {
     background: #fff !important;
   }
 
-  .noprint, .del, .hours, .add {
+  .noprint, .del, .hours, .add, nav {
     display: none;
   }
 
@@ -251,8 +257,8 @@ form table {
         font-size: 12pt;
 
         th:first-child {
-          background: transparent;
-          color: black;
+          background: #fff !important;
+          color: $forecolor;
         }
       }
     }
@@ -266,6 +272,7 @@ form table {
 
   .day {
     margin: 0.5mm 1mm;
+    background: #fff !important;
 
     > .title {
       padding-top: 0.5mm;

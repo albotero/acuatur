@@ -14,10 +14,10 @@ socket.on('response', function(data) {
     location.reload();
     return;
   }
-  // Update summary
+  // Update summaries
   $('table.summary').html(data['summary']);
-  // Update summary
   $('table.cext').html(data['cext']);
+  $('table.extra').html(data['extra']);
   // Add shifts if apply
   if ('add' in data) {
     shift_html = `
@@ -27,6 +27,7 @@ socket.on('response', function(data) {
       <div class="hours">${data['add']['hours']}</div>
     </div>`;
     $(`#${data['add']['day']}-${data['add']['shift']} > div:last`).before(shift_html);
+    toggle_printable();
   }
 });
 

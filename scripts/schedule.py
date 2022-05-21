@@ -46,9 +46,10 @@ class Shift:
 
 class Schedule:
 
-    def __init__(self, year, month, employees, id=None):
+    def __init__(self, year, month, group, employees):
         self.year = year
         self.month = month
+        self.group = group
         employees.sort(key=lambda x: x[0])
         self.employees = [ Employee(x) for x in employees ]
         self.shifts = []
@@ -189,6 +190,9 @@ class Schedule:
                               shift.hours) )
         cext.sort(key=lambda x: x[0])
 
+        if not len(cext):
+            return ''
+
         html = '''
             <thead>
               <th colspan="4">Consulta Externa</th>
@@ -207,6 +211,40 @@ class Schedule:
                   <td>{ce_employee}</td>
                   <td>{ce_shift}</td>
                   <td>{ce_hours} horas</td>
+                </tr>
+                '''
+        return html
+
+    def summary_extra(self):
+        '''Returns list of tuples with day, employee, shift, hours in extra'''
+        extra = []
+        for shift in self.shifts:
+            if 'ex' in shift.shift:
+                extra.append( (shift.day,
+                              f'{shift.day}/{self.month}/{self.year}',
+                              shift.employee_id,
+                              shift.hours) )
+        extra.sort(key=lambda x: x[0])
+
+        if not len(extra):
+            return ''
+
+        html = '''
+            <thead>
+              <th colspan="3">Horas Extra</th>
+              <tr>
+                  <th>D&iacute;a</th>
+                  <th>Anestesi&oacute;logo</th>
+                  <th>Horas</th>
+              </tr>
+            </thead>
+            '''
+        for ex_day, ex_date, ex_employee, ex_hours in extra:
+            html += f'''
+                <tr>
+                  <td>{ex_date}</td>
+                  <td>{ex_employee}</td>
+                  <td>{ex_hours} horas</td>
                 </tr>
                 '''
         return html

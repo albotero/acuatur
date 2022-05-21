@@ -1,0 +1,189 @@
+body {
+  background: #eee;
+  color: #000;
+}
+body nav {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 35px;
+  background: #bbb;
+  overflow: hidden;
+  transition: 0.5s ease;
+  user-select: none;
+}
+body nav .menu {
+  width: 25px;
+  height: 25px;
+  margin: 5px;
+  transition: 0.5s ease;
+}
+body nav .menu .bar1, body nav .menu .bar2, body nav .menu .bar3 {
+  width: 25px;
+  height: 3.5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+body nav .menu.change {
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+body nav:hover {
+  transition: 0.5s ease;
+  width: 200px;
+}
+body nav:hover .menu {
+  transition: 0.5s ease;
+}
+body nav:hover ul li ul {
+  display: block;
+}
+body nav ul {
+  background: #bbb;
+  color: #000;
+}
+body nav li {
+  white-space: nowrap;
+  list-style: none;
+  margin-left: -40px;
+  line-height: 1.75;
+  cursor: pointer;
+}
+body nav li.user::before {
+  background-image: url("/static/svg/user.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.passwd::before {
+  background-image: url("/static/svg/passwd.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.logout::before {
+  background-image: url("/static/svg/logout.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.month::before {
+  background-image: url("/static/svg/month.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.group::before {
+  background-image: url("/static/svg/group.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.open::before {
+  background-image: url("/static/svg/open.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.duplicate::before {
+  background-image: url("/static/svg/duplicate.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.delete::before {
+  background-image: url("/static/svg/delete.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li.new::before {
+  background-image: url("/static/svg/new.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+body nav li a {
+  text-decoration: none;
+  margin-left: 12.5px;
+}
+body nav li a:link, body nav li a:visited, body nav li a:hover, body nav li a:active {
+  color: inherit;
+}
+body nav li ul {
+  display: none;
+}
+body nav li ul li {
+  height: 0;
+  visibility: hidden;
+  margin-left: -12px;
+}
+body nav li ul li ul {
+  margin-left: -20px;
+}
+body nav li ul li ul li {
+  display: inline-block;
+  height: auto;
+  margin: 0 -5px 3px 5px;
+}
+body nav li.selected ul > li {
+  height: auto;
+  visibility: visible;
+}
+body nav li.selected, body nav li:hover {
+  background: #0695EC;
+}
+
+@media (max-width: 1024px) {
+  nav {
+    height: 35px;
+  }
+  nav:hover {
+    height: auto;
+    bottom: 0;
+  }
+}
+@media (min-width: 1024px) {
+  nav {
+    bottom: 0;
+  }
+}
+
+/*# sourceMappingURL=base.css.map */

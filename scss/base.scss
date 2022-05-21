@@ -1,0 +1,141 @@
+$backcolor: #eee;
+$forecolor: #000;
+$selected: #0695EC;
+
+@mixin icon($img) {
+  background-image: url($img);
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+}
+
+body {
+  background: $backcolor;
+  color: $forecolor;
+
+  nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 35px;
+    background: #bbb;
+    overflow: hidden;
+    transition: .5s ease;
+    user-select: none;
+
+    .menu {
+      width: 25px;
+      height: 25px;
+      margin: 5px;
+      transition: .5s ease;
+
+      .bar1, .bar2, .bar3 {
+        width: 25px;
+        height: 3.5px;
+        background-color: #333;
+        margin: 6px 0;
+        transition: 0.4s;
+      }
+
+      &.change {
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+      }
+    }
+
+    &:hover {
+      transition: .5s ease;
+      width: 200px;
+
+      .menu {
+        transition: .5s ease;
+      }
+
+      ul li ul {
+        display: block;
+      }
+    }
+
+    ul {
+      background: #bbb;
+      color: $forecolor;
+    }
+
+    li {
+      white-space: nowrap;
+      list-style: none;
+      margin-left: -40px;
+      line-height: 1.75;
+      cursor: pointer;
+
+      &.user::before { @include icon('/static/svg/user.svg'); }
+      &.passwd::before { @include icon('/static/svg/passwd.svg'); }
+      &.logout::before { @include icon('/static/svg/logout.svg'); }
+      &.month::before { @include icon('/static/svg/month.svg'); }
+      &.group::before { @include icon('/static/svg/group.svg'); }
+      &.open::before { @include icon('/static/svg/open.svg'); }
+      &.duplicate::before { @include icon('/static/svg/duplicate.svg'); }
+      &.delete::before { @include icon('/static/svg/delete.svg'); }
+      &.new::before { @include icon('/static/svg/new.svg'); }
+
+      a {
+        text-decoration: none;
+        margin-left: 12.5px;
+
+        &:link, &:visited, &:hover, &:active {
+          color: inherit;
+        }
+      }
+
+      ul {
+        display: none;
+
+        li {
+          height: 0;
+          visibility: hidden;
+          margin-left: -12px;
+
+          ul {
+            margin-left: -20px;
+
+            li {
+              display: inline-block;
+              height: auto;
+              margin: 0 -5px 3px 5px;
+            }
+          }
+        }
+      }
+
+      &.selected ul > li {
+        height: auto;
+        visibility: visible;
+      }
+
+      &.selected, &:hover {
+        background: $selected;
+      }
+    }
+  }
+}
+
+@media(max-width: 1024px) { // Mobile
+  nav {
+    height: 35px;
+
+    &:hover {
+      height: auto;
+      bottom: 0;
+    }
+  }
+}
+
+@media(min-width: 1024px) { // Desktop
+  nav {
+    bottom: 0;
+  }
+}

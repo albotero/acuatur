@@ -12,11 +12,15 @@
 {% endblock %}
 
 {% block content %}
+  {% include 'menu.html' %}
   <div class="tables">
+    <div class="month noprint">
+      {{ month.title }}
+    </div>
     <table class="schedule">
       <thead>
         <tr>
-          <th colspan="7">Turnos</th>
+          <th colspan="7">Turnos {{ schedule.group }}</th>
         </tr>
         <tr>
           {% for d in dow %}
@@ -54,15 +58,11 @@
         </tr>
       {% endfor %}
     </table>
-
-    <table class="cext">
-      {{ schedule.summary_cext() | safe }}
-    </table>
+    <table class="cext">{{ schedule.summary_cext() | safe }}</table>
+    <table class="extra">{{ schedule.summary_extra() | safe }}</table>
   </div>
 
-  <table class="summary">
-    {{ schedule.summary_html() | safe }}
-  </table>
+  <table class="summary">{{ schedule.summary_html() | safe }}</table>
 {% endblock %}
 
 {% block scripts %}

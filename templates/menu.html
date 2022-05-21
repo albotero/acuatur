@@ -1,0 +1,43 @@
+<nav>
+  <div class="menu">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+  </div>
+  <ul>
+    <li class="user">
+      <a>Usuario</a>
+      <ul>
+        <li class="passwd"><a href="{{ url_for('.index') }}">Cambiar contrase&ntilde;a</a></li>
+        <li class="logout"><a href="{{ url_for('.index') }}">Cerrar sesi&oacute;n</a></li>
+      </ul>
+    </li>
+    <li class="new">
+      <a onclick="new_schedule();">Nuevo Cuadro</a>
+    </li>
+    {% for i in range(5) %}
+    <li class="month">
+      <a class="{{ 'selected' if tmp else '' }}">2022-{{5-i}}</a>
+      <ul>
+        <li class="group">
+          <a>Anestesi&oacute;logos</a>
+          <ul>
+            <li class="open"><a onclick="open('{{ i }}');" title="Abrir"></a></li>
+            <li class="duplicate"><a onclick="duplicate('{{ i }}');" title="Duplicar"></a></li>
+            <li class="delete"><a onclick="delete('{{ i }}');" title="Eliminar"></a></li>
+          </ul>
+        </li>
+        <li class="group">
+          <a>Asistenciales</a>
+          <ul>
+            <li class="open"><a onclick="open_schedule('{{ i }}');" title="Abrir"></a></li>
+            <li class="duplicate"><a onclick="duplicate_schedule('{{ i }}');" title="Duplicar"></a></li>
+            <li class="delete"><a onclick="delete_schedule('{{ i }}');" title="Eliminar"></a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    {% endfor %}
+  </ul>
+</nav>
+<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
