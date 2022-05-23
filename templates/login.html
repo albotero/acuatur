@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %} Acuatur {% endblock %}
+
+{% block style %} {% endblock %}
+
+{% block content %}
+  {% set user, password = None, None %}
+  {% if result %}
+    {% set user, password = result %}
+    <div class="box">
+      {% if user.status == 'authenticated' %}
+        <script type="text/javascript">window.location = '{{ url_for('.index') }}';</script>
+      {% else %}
+        <p class="error">Ocurri&oacute; un error al iniciar sesi&oacute;n</p>
+      {% endif %}
+      {{ user.message() | safe }}
+    </div>
+  {% endif %}
+  <div class="box">
+    <form action="" method="post">
+      <table>
+        <tr>
+          <th>Usuario:</th>
+          <td><input type="text" name="user" value="{{ user.id if user else '' }}"></td>
+        </tr>
+        <tr>
+          <th>Contrase&ntilde;a:</th>
+          <td><input type="password" name="password" value="{{ password if password else '' }}"></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="buttons">
+              <input type="submit" value="Iniciar Sesi&oacute;n">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+{% endblock %}
+
+{% block scripts %} {% endblock %}

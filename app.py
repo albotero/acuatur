@@ -5,6 +5,7 @@ from flask_socketio import SocketIO, emit
 
 from scripts.calendar import dow
 from scripts.schedule import Schedule, Shift
+from scripts.user import User
 
 import os
 
@@ -15,15 +16,53 @@ socketio = SocketIO(app, cors_allowed_origins = '*', async_mode='gevent') #, log
 
 os.chdir(os.path.dirname(__file__))
 
+def login_user(user, passwd):
+    '''Login user to session'''
+    user = User(user, passwd)
+    if user.status == 'authenticated':
+        session['u'] = user.id
+        session['p'] = user.data['password']
+    return user, passwd
+
+def logged_user():
+    '''Retrieves logged user'''
+    return User(session.get('u'), session.get('p'), hashed = True)
+
 @app.route('/')
 def index():
-    return render_template('index.html')
-    # Verifica que esté loggeado
-    if 'user' not in session:
+    # Requires logged user
+    user = logged_user()
+    if user.status != 'authenticated':
         return redirect(url_for('login'))
+
+    return render_template('index.html', user=user)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    # Verifies if user is logged
+    user = logged_user()
+    if user.status == 'authenticated':
+        return redirect(url_for('.index'))
+
+    if request.method == 'POST':
+        result = login_user(request.values.get('user'),
+                            request.values.get('password'))
+        return render_template('login.html', result = result)
+
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
 
 @app.route('/schedule')
 def new_schedule():
+    # Requires logged user
+    user = logged_user()
+    if user.status != 'authenticated':
+        return redirect(url_for('login'))
+
     employees = ([
         ('alvarez', 'Danik Liliana Álvarez Pilimur'),
         ('arroyave', 'Julián Andrés Arroyave Gordillo'),
@@ -51,6 +90,11 @@ def new_schedule():
 
 @app.route('/schedule/<filename>')
 def schedule(filename):
+    # Requires logged user
+    user = logged_user()
+    if user.status != 'authenticated':
+        return redirect(url_for('login'))
+
     if os.path.exists(f'schedules/{filename}'):
         # Load schedule
         sched = Schedule.load_from_file(filename)
@@ -68,7 +112,8 @@ def schedule(filename):
                             shifts=Shift.shifts,
                             shift_hours=Shift.shift_hours,
                             schedule=sched,
-                            employees=empl)
+                            employees=empl,
+                            user=user)
 
 @socketio.on('update_schedule')
 def update_schedule(data):

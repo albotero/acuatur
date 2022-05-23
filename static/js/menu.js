@@ -8,7 +8,7 @@ $('li').click(function(){
 });
 
 function open_schedule(id) {
-
+  location.replace(`/schedule/${id}`);
 }
 
 function duplicate_schedule(id) {

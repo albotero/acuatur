@@ -12,7 +12,9 @@
 {% endblock %}
 
 {% block content %}
-  {% include 'menu.html' %}
+  {% with user = user, schedule_id = schedule.id %}
+    {% include 'menu.html' %}
+  {% endwith %}
   <div class="tables">
     <div class="month noprint">
       {{ month.title }}

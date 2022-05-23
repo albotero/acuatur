@@ -1,2 +1,3 @@
 venv*
-schedules*
+schedules/*
+users/*

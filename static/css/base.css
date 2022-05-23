@@ -160,8 +160,9 @@ body nav li ul li ul {
 }
 body nav li ul li ul li {
   display: inline-block;
-  height: auto;
   margin: 0 -5px 3px 5px;
+  width: 35px;
+  height: 35px;
 }
 body nav li.selected ul > li {
   height: auto;
@@ -169,6 +170,38 @@ body nav li.selected ul > li {
 }
 body nav li.selected, body nav li:hover {
   background: #0695EC;
+}
+body .box {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  border: solid 1px grey;
+  background: lightgrey;
+  margin: 50px auto;
+  padding: 15px 25px;
+}
+body .box p {
+  font-variant: small-caps;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  font-size: 20px;
+}
+body .box p.error {
+  color: red;
+}
+body .box table {
+  margin: auto;
+}
+body .box table td {
+  padding: 5px 10px;
+}
+body .box .buttons {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+body .box .buttons input[type=submit], body .box .buttons input[type=cancel], body .box .buttons input[type=button] {
+  padding: 5px 10px;
 }
 
 @media (max-width: 1024px) {

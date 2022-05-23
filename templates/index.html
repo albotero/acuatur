@@ -5,7 +5,9 @@
 {% block style %} {% endblock %}
 
 {% block content %}
-  {% include 'menu.html' %}
+  {% with user = user %}
+    {% include 'menu.html' %}
+  {% endwith %}
 {% endblock %}
 
 {% block scripts %} {% endblock %}
