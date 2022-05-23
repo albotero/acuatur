@@ -15,30 +15,23 @@
     <li class="new">
       <a onclick="new_schedule();">Nuevo Cuadro</a>
     </li>
-    {% for i in range(5) %}
-    <li class="month {{ 'selected' if not i and schedule_id == 'e9711e7f7f5b40039e5822ad61cb1bf3' else '' }}">
-      <a>Abril 2022</a>
-      <ul>
-        <li class="group">
-          <a>Anestesi&oacute;logos</a>
+    {% for s in user.data.get('schedules', 'None|').replace('None|', '').split('|') %}
+      {% if '@' in s %}
+        {% set s_month, s_group, s_id = s.split('@') %}
+        <li class="month {{ 'selected' if schedule_id == s_id else '' }}">
+          <a>{{ s_month }}</a>
           <ul>
-            <li class="open" onclick="open_schedule('{{ i if i else 'e53c73cb46054a7a99a5fa0a2f7634c9' }}');" title="Abrir"></li>
-            <li class="duplicate" onclick="duplicate_schedule('{{ i if i else 'e53c73cb46054a7a99a5fa0a2f7634c9' }}');" title="Duplicar"></li>
-            <li class="delete" onclick="delete_schedule('{{ i if i else 'e53c73cb46054a7a99a5fa0a2f7634c9' }}');" title="Eliminar"></li>
+            <li class="group">
+              <a>{{ s_group }}</a>
+              <ul>
+                <li class="open" onclick="open_schedule('{{ s_id }}');" title="Abrir"></li>
+                <li class="duplicate" onclick="duplicate_schedule('{{ s_id }}');" title="Duplicar"></li>
+                <li class="delete" onclick="delete_schedule('{{ s_id }}');" title="Eliminar"></li>
+              </ul>
+            </li>
           </ul>
         </li>
-        {% if i < 3 %}
-        <li class="group">
-          <a>Asistenciales</a>
-          <ul>
-            <li class="open" onclick="open_schedule('{{ i }}');"></li>
-            <li class="duplicate" onclick="duplicate_schedule('{{ i }}');" title="Duplicar"></li>
-            <li class="delete" onclick="delete_schedule('{{ i }}');" title="Eliminar"></li>
-          </ul>
-        </li>
-        {% endif %}
-      </ul>
-    </li>
+      {% endif %}
     {% endfor %}
   </ul>
 </nav>

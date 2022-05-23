@@ -50,6 +50,7 @@ body {
     &:hover {
       transition: .5s ease;
       width: 200px;
+      overflow-y: scroll;
 
       .menu {
         transition: .5s ease;

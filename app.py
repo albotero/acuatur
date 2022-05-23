@@ -85,7 +85,7 @@ def new_schedule():
         ('jf. orozco', 'Johann Fernando Orozco Castro'),
         ('guevara', 'Paula Alejandra Guevara')
     ])
-    sched = Schedule(2022, 4, 'Anestesiólogos', employees)
+    sched = Schedule(2022, 4, 'Anestesiólogos', employees, user)
     return redirect(url_for('.schedule', filename=sched.id))
 
 @app.route('/schedule/<filename>')

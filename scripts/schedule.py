@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 from scripts.calendar import Month
+from scripts.user import User
 import uuid
 import pickle
 
@@ -36,6 +37,7 @@ class Shift:
         self.hours = self.get_shift_hours(shift, hours)
         self.id = uuid.uuid4().hex
 
+
     def get_shift_hours(self, shift, hours):
         if hours:
             return hours
@@ -46,15 +48,19 @@ class Shift:
 
 class Schedule:
 
-    def __init__(self, year, month, group, employees):
+    def __init__(self, year, month, group, employees, user):
         self.year = year
         self.month = month
         self.group = group
+
         employees.sort(key=lambda x: x[0])
         self.employees = [ Employee(x) for x in employees ]
         self.shifts = []
+
         self.id = uuid.uuid4().hex
         self.save_to_file(self.id)
+        user.data['schedules'] = f"{user.data.get('schedules')}|{self.get_month().title}@{group}@{self.id}"
+        user.save_data()
 
     def get_month(self):
         return Month(self.year, self.month)

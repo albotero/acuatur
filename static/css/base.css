@@ -32,6 +32,7 @@ body nav .menu.change {
 body nav:hover {
   transition: 0.5s ease;
   width: 200px;
+  overflow-y: scroll;
 }
 body nav:hover .menu {
   transition: 0.5s ease;
