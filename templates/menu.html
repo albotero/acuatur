@@ -8,7 +8,7 @@
     <li class="user">
       <a>{{ user.id }}</a>
       <ul>
-        <li class="passwd" onclick="window.location = '{{ url_for('.index') }}';"><a>Cambiar contrase&ntilde;a</a></li>
+        <li class="passwd" onclick="window.location = '{{ url_for('password') }}';"><a>Cambiar contrase&ntilde;a</a></li>
         <li class="logout" onclick="window.location = '{{ url_for('logout') }}';"><a>Cerrar sesi&oacute;n</a></li>
       </ul>
     </li>

@@ -140,3 +140,12 @@ def update_schedule(data):
 def del_schedule():
     Schedule.load_from_file(request.values.get('id')).delete()
     return redirect(url_for('.index'))
+
+@app.route('/password')
+def password():
+    # Requires logged user
+    user = logged_user()
+    if user.status != 'authenticated':
+        return redirect(url_for('login'))
+
+    return render_template('password.html', user = user)
