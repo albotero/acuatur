@@ -8,16 +8,16 @@
     <li class="user">
       <a>{{ user.id }}</a>
       <ul>
-        <li class="passwd"><a onclick="window.location = '{{ url_for('.index') }}';">Cambiar contrase&ntilde;a</a></li>
-        <li class="logout"><a onclick="window.location = '{{ url_for('logout') }}';">Cerrar sesi&oacute;n</a></li>
+        <li class="passwd" onclick="window.location = '{{ url_for('.index') }}';"><a>Cambiar contrase&ntilde;a</a></li>
+        <li class="logout" onclick="window.location = '{{ url_for('logout') }}';"><a>Cerrar sesi&oacute;n</a></li>
       </ul>
     </li>
-    <li class="new">
-      <a onclick="new_schedule();">Nuevo Cuadro</a>
+    <li class="new" onclick="new_schedule();">
+      <a>Nuevo Cuadro</a>
     </li>
-    {% for s in user.data.get('schedules', 'None|').replace('None|', '').split('|') %}
-      {% if '@' in s %}
-        {% set s_month, s_group, s_id = s.split('@') %}
+    {% if user.data.get('schedules') %}
+      {% for s in user.data.get('schedules').split('|') | sort(reverse=True) %}
+        {% set s_date, s_month, s_group, s_id = s.split('@') %}
         <li class="month {{ 'selected' if schedule_id == s_id else '' }}">
           <a>{{ s_month }}</a>
           <ul>
@@ -25,14 +25,22 @@
               <a>{{ s_group }}</a>
               <ul>
                 <li class="open" onclick="open_schedule('{{ s_id }}');" title="Abrir"></li>
-                <li class="duplicate" onclick="duplicate_schedule('{{ s_id }}');" title="Duplicar"></li>
-                <li class="delete" onclick="delete_schedule('{{ s_id }}');" title="Eliminar"></li>
+                <!--<li class="duplicate" onclick="duplicate_schedule('{{ s_id }}');" title="Duplicar"></li>-->
+                <li class="delete" onclick="delete_schedule('{{ s_month }}', '{{ s_group }}', '{{ s_id }}');" title="Eliminar"></li>
               </ul>
             </li>
           </ul>
         </li>
-      {% endif %}
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
+    <script type="text/javascript">
+const groups = {
+{% for g in groups %}  '{{ g.id }}': {
+    'str': '{{ g.name }}',
+    'list': {{ g.employee_names() | safe }}
+  },
+{% endfor %}};
+    </script>
   </ul>
 </nav>
 <script src="{{ url_for('static', filename='js/menu.js') }}"></script>

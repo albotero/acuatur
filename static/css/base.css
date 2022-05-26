@@ -1,6 +1,7 @@
 body {
   background: #eee;
   color: #000;
+  font-size: 14px;
 }
 body nav {
   position: fixed;
@@ -203,6 +204,55 @@ body .box .buttons {
 }
 body .box .buttons input[type=submit], body .box .buttons input[type=cancel], body .box .buttons input[type=button] {
   padding: 5px 10px;
+}
+body form table {
+  text-transform: capitalize;
+  margin: 0 auto;
+}
+body form table tr {
+  line-height: 22px;
+}
+body form table tr th {
+  text-align: left;
+  padding-right: 10px;
+}
+body form table tr td {
+  text-align: left;
+  width: min-content;
+}
+body form table tr td input[type=number] {
+  width: 60px;
+}
+body form table tr td select {
+  max-width: 150px;
+  text-transform: capitalize;
+}
+body form table div.list {
+  font-size: x-small;
+  font-style: italic;
+  line-height: 1.2;
+  margin: 15px 0 -30px 0;
+}
+
+.ui-dialog {
+  top: 25% !important;
+  border-radius: 7px !important;
+  font-size: 14px !important;
+}
+
+.ui-widget-overlay {
+  opacity: 0.6 !important;
+  /* Make sure to change both of these, as IE only sees the second one */
+  filter: Alpha(Opacity=60) !important;
+  background: #323232 !important;
+  /* This will make it darker */
+}
+
+.ui-widget-content .del-schedule {
+  font-weight: bold;
+  font-size: medium;
+  text-align: center;
+  color: #C70039;
 }
 
 @media (max-width: 1024px) {

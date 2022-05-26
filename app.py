@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from flask_socketio import SocketIO, emit
 
 from scripts.calendar import dow
+from scripts.employees import Group
 from scripts.schedule import Schedule, Shift
 from scripts.user import User
 
@@ -35,7 +36,9 @@ def index():
     if user.status != 'authenticated':
         return redirect(url_for('login'))
 
-    return render_template('index.html', user=user)
+    return render_template('index.html',
+            user=user,
+            groups=Group.all_groups())
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -56,36 +59,21 @@ def logout():
     session.clear()
     return redirect(url_for('login'))
 
-@app.route('/schedule')
+@app.route('/schedule', methods=['POST'])
 def new_schedule():
     # Requires logged user
     user = logged_user()
     if user.status != 'authenticated':
         return redirect(url_for('login'))
 
-    employees = ([
-        ('alvarez', 'Danik Liliana Álvarez Pilimur'),
-        ('arroyave', 'Julián Andrés Arroyave Gordillo'),
-        ('benjumea', 'Angélica María Benjumea Marulanda'),
-        ('botero', 'Alejandro Botero Fernández'),
-        ('cardona', 'Eduin Yadir Cardona Aristizábal'),
-        ('castro', 'Jairo Andres Castro Peñaloza'),
-        ('pabon', 'Favio Ernesto Pabón Muñoz'),
-        ('knudson', 'Jorge Knudson  '),
-        ('mera', 'Soraya Mera Cerón'),
-        ('morales', 'Maryurin Morales Saavedra'),
-        ('naranjo', 'Miguel Antonio Naranjo Hoyos'),
-        ('pardo', 'Wilber Hernán Pardo Díaz'),
-        ('posso', 'Mónica Alexandra Posso Ponce'),
-        ('alfaro', 'Jorge Andrés Alfaro'),
-        ('rosillo', 'Luis Andrés Rosillo Meneses'),
-        ('serna', 'Ana Milena Serna Murillo'),
-        ('m. orozco', 'Mario Germán Orozco'),
-        ('vaisman', 'Liviu Vaisman Romelt'),
-        ('jf. orozco', 'Johann Fernando Orozco Castro'),
-        ('guevara', 'Paula Alejandra Guevara')
-    ])
-    sched = Schedule(2022, 4, 'Anestesiólogos', employees, user)
+    year, month = [ int(x) for x in request.values.get('month').split('-') ]
+
+    sched = Schedule(
+        year,
+        month,
+        Group(request.values.get('group')),
+        user)
+
     return redirect(url_for('.schedule', filename=sched.id))
 
 @app.route('/schedule/<filename>')
@@ -95,7 +83,7 @@ def schedule(filename):
     if user.status != 'authenticated':
         return redirect(url_for('login'))
 
-    if os.path.exists(f'schedules/{filename}'):
+    if os.path.exists(f'user_data/schedules/{filename}'):
         # Load schedule
         sched = Schedule.load_from_file(filename)
     else:
@@ -113,7 +101,8 @@ def schedule(filename):
                             shift_hours=Shift.shift_hours,
                             schedule=sched,
                             employees=empl,
-                            user=user)
+                            user=user,
+                            groups=Group.all_groups())
 
 @socketio.on('update_schedule')
 def update_schedule(data):
@@ -146,3 +135,8 @@ def update_schedule(data):
         emit('response', res)
     except Exception as ex:
         emit('response', f'error >> {ex}')
+
+@app.route('/del-schedule', methods=['POST'])
+def del_schedule():
+    Schedule.load_from_file(request.values.get('id')).delete()
+    return redirect(url_for('.index'))

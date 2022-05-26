@@ -1,3 +1,2 @@
 venv*
-schedules/*
-users/*
+user_data/*

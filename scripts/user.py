@@ -29,8 +29,10 @@ class Password:
 class User:
     def __init__(self, id, passwd, hashed = False):
         self.id = id
-        self.path = f'users/{self.id}.conf'
+        self.path = f'user_data/users/{self.id}.conf'
         self.status = 'created'
+        self.passwd = passwd
+        self.hashed = hashed
 
         if not id:
             self.status = 'no_id'
@@ -40,15 +42,15 @@ class User:
             self.status = 'wrong_id'
         else:
             self.data = {}
-            self.load_data(passwd, hashed)
+            self.load_data()
 
-    def load_data(self, passwd, hashed):
+    def load_data(self):
         '''Load data into dict'''
         with open(self.path, 'r') as file:
             for line in file:
                 data = line.split('\t')
                 self.data[data[0].strip()] = data[1].strip()
-        if Password.try_password(passwd, self.data.get('password'), hashed):
+        if Password.try_password(self.passwd, self.data.get('password'), self.hashed):
             self.status = 'authenticated'
         else:
             self.status = 'wrong_password'

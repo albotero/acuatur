@@ -5,7 +5,7 @@
 {% block style %} {% endblock %}
 
 {% block content %}
-  {% with user = user %}
+  {% with user = user, groups = groups %}
     {% include 'menu.html' %}
   {% endwith %}
 {% endblock %}

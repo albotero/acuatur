@@ -1,5 +1,4 @@
 body {
-  font-size: 14px;
   padding: 10px 10px 10px 20px;
   -webkit-print-color-adjust: exact;
   color-adjust: exact;
@@ -60,13 +59,16 @@ table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.e
 table.summary tbody tr:hover, table.cext tbody tr:hover, table.extra tbody tr:hover {
   background: #0695EC;
 }
+table.extra th:nth-child(2) {
+  width: 300px;
+}
 table td {
   width: 100px;
   text-align: center;
   vertical-align: top;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1150px) {
   div.tables {
     position: absolute;
     top: 20px;
@@ -175,28 +177,6 @@ table td {
 }
 .day .shift .add:active {
   background: #0695EC;
-}
-
-form table {
-  text-transform: capitalize;
-}
-form table tr {
-  line-height: 22px;
-}
-form table tr th {
-  text-align: left;
-  padding-right: 10px;
-}
-form table tr td {
-  text-align: left;
-  width: min-content;
-}
-form table tr td input[type=number] {
-  width: 60px;
-}
-form table tr td select {
-  max-width: 150px;
-  text-transform: capitalize;
 }
 
 @media print {

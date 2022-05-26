@@ -3,13 +3,8 @@
 from scripts.calendar import Month
 from scripts.user import User
 import uuid
+import os
 import pickle
-
-class Employee:
-
-    def __init__(self, employee):
-        self.id, self.name = employee
-
 
 class Shift:
 
@@ -48,19 +43,20 @@ class Shift:
 
 class Schedule:
 
-    def __init__(self, year, month, group, employees, user):
+    def __init__(self, year, month, group, user):
         self.year = year
         self.month = month
         self.group = group
-
-        employees.sort(key=lambda x: x[0])
-        self.employees = [ Employee(x) for x in employees ]
+        self.user = user
+        self.employees = group.employees
         self.shifts = []
 
         self.id = uuid.uuid4().hex
         self.save_to_file(self.id)
-        user.data['schedules'] = f"{user.data.get('schedules')}|{self.get_month().title}@{group}@{self.id}"
-        user.save_data()
+
+        self.user.data['schedules'] = f"{self.user.data['schedules']}|" if self.user.data.get('schedules') else ''
+        self.user.data['schedules'] += f"{self.year}-{self.month:02d}@{self.get_month().title}@{group.name}@{self.id}"
+        self.user.save_data()
 
     def get_month(self):
         return Month(self.year, self.month)
@@ -228,7 +224,7 @@ class Schedule:
             if 'ex' in shift.shift:
                 extra.append( (shift.day,
                               f'{shift.day}/{self.month}/{self.year}',
-                              shift.employee_id,
+                              [x.name for x in self.group.employees if x.id == shift.employee_id][0],
                               shift.hours) )
         extra.sort(key=lambda x: x[0])
 
@@ -258,12 +254,23 @@ class Schedule:
     def save_to_file(self, filename):
         '''Serializes all schedule and saves it to a file'''
         # Open a file and use dump()
-        with open(f'schedules/{filename}', 'wb') as file:
+        with open(f'user_data/schedules/{filename}', 'wb') as file:
             pickle.dump(self, file)
 
     def load_from_file(filename):
         '''Loads a serialized schedule from a file'''
         # Open the file in binary mode
-        with open(f'schedules/{filename}', 'rb') as file:
+        with open(f'user_data/schedules/{filename}', 'rb') as file:
             # Call load method to deserialze
             return pickle.load(file)
+
+    def delete(self):
+        # Update user data
+        self.user.load_data()
+        # Remove schedule from user
+        self.user.data['schedules'] = '|'.join([ x for x in self.user.data.get('schedules', []).split('|')
+                                                    if self.id not in x ])
+        # Save user data
+        self.user.save_data()
+        # Delete schedule from files
+        os.remove(f'user_data/schedules/{self.id}')

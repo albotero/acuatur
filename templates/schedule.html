@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block content %}
-  {% with user = user, schedule_id = schedule.id %}
+  {% with user = user, schedule_id = schedule.id, groups = groups %}
     {% include 'menu.html' %}
   {% endwith %}
   <div class="tables">
@@ -22,7 +22,7 @@
     <table class="schedule">
       <thead>
         <tr>
-          <th colspan="7">Turnos {{ schedule.group }}</th>
+          <th colspan="7">Turnos {{ schedule.group.name }}</th>
         </tr>
         <tr>
           {% for d in dow %}
@@ -75,5 +75,5 @@
     const shift_hours = {{ shift_hours | safe }};
   </script>
   <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/schedule.js') }}"></script>
 {% endblock %}
