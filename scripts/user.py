@@ -71,3 +71,18 @@ class User:
             'wrong_password': 'Clave errada'
         }
         return m[self.status]
+
+    def update_password(self, old_pass, new_pass):
+        '''If old_pass matches current one, updates it with new_pass'''
+
+        if not Password.try_password(old_pass, self.passwd, hashed = False):
+            return 'error', 'Contrase&ntilde;a Actual errada. Por favor intenta nuevamente.'
+
+        if len(new_pass) < 6:
+            return 'error', 'La Nueva Contrase&ntilde;a debe tener por lo menos 6 caracteres.'
+
+        # Passwords are ok, updates with new_pass
+        salt = self.data['password'][:Password.salt_length * 2]
+        self.data['password'] = Password.hash_password(new_pass, salt)
+        self.save_data()
+        return 'success', 'Se cambi&oacute; la contrase&ntilde;a correctamente.'

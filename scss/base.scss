@@ -135,13 +135,19 @@ body {
     padding: 15px 25px;
 
     p {
-      font-variant: small-caps;
-      font-weight: bold;
-      margin: 0 0 10px 0;
-      font-size: 20px;
+      &:not(.mensaje) {
+        font-variant: small-caps;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+        font-size: 20px;
+      }
 
       &.error {
         color: red;
+      }
+
+      &.success {
+        color: darkgreen;
       }
     }
 

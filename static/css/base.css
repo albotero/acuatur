@@ -182,7 +182,7 @@ body .box {
   margin: 50px auto;
   padding: 15px 25px;
 }
-body .box p {
+body .box p:not(.mensaje) {
   font-variant: small-caps;
   font-weight: bold;
   margin: 0 0 10px 0;
@@ -190,6 +190,9 @@ body .box p {
 }
 body .box p.error {
   color: red;
+}
+body .box p.success {
+  color: darkgreen;
 }
 body .box table {
   margin: auto;
@@ -244,7 +247,7 @@ body form table div.list {
   opacity: 0.6 !important;
   /* Make sure to change both of these, as IE only sees the second one */
   filter: Alpha(Opacity=60) !important;
-  background: #323232 !important;
+  background: rgb(50, 50, 50) !important;
   /* This will make it darker */
 }
 
@@ -269,5 +272,3 @@ body form table div.list {
     bottom: 0;
   }
 }
-
-/*# sourceMappingURL=base.css.map */
