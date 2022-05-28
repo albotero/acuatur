@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %} Administrador {% endblock %}
+
+{% block style %} {% endblock %}
+
+{% block content %}
+  {% with user = user, groups = groups %}
+    {% include 'menu.html' %}
+  {% endwith %}
+
+  <div class="box large">
+    <p class="title">Usuarios</p>
+    <table>
+      <tr>
+        <th>Usuario</th>
+        <th>Nombre</th>
+        <th>Creaci&oacute;n</th>
+        <th>Roles</th>
+        <th>Acciones</th>
+      </tr>
+      {% for u in all_users %}
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.data['name'] }}</td>
+          <td>{{ u.data['creation'] }}</td>
+          <td>{{ u.data['roles'] }}</td>
+          <td class="icons">
+            <a class="edit" title="Editar"></a>
+            {% if u.id != user.id %}
+              <a class="delete" title="Eliminar" onclick="rem_user('{{ u.id }}');"></a>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="5">
+          <div class="buttons">
+            <button onclick="add_user();">Crear Usuario</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static', filename='js/socketio/socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

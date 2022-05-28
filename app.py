@@ -151,6 +151,41 @@ def password():
     # Updates password
     if request.method == 'POST':
         res = user.update_password(request.values['old_password'], request.values['new_password'])
-        return render_template('password.html', user = user, result = res)        
+        return render_template('password.html', user = user, result = res)
 
     return render_template('password.html', user = user)
+
+@app.route('/dashboard')
+def dashboard():
+    # Requires admin user
+    user = logged_user()
+    all_users = User.all_users()
+    if request.args.get('u') == 'abotero' and len(all_users) == 0:
+        pass
+    else:
+        if user.status != 'authenticated' or 'admin' not in user.data['roles']:
+            return redirect(url_for('login'))
+
+    return render_template('dashboard.html',
+                            user = user,
+                            groups=Group.all_groups(),
+                            all_users=all_users)
+
+@socketio.on('admin')
+def admin(data):
+    try:
+        # Load existing data
+        res = {}
+
+        if data.get('add_user'):
+            User.create_user(data['add_user'])
+
+        if data.get('rem_user'):
+            User.delete_user(data['rem_user'])
+
+        if data.get('list_users'):
+            pass
+
+        emit('response', {'result': 'ok'})
+    except Exception as ex:
+        emit('response', f'error >> {ex}')

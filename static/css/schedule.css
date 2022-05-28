@@ -57,7 +57,7 @@ table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.e
   background: #e2e2e2;
 }
 table.summary tbody tr:hover, table.cext tbody tr:hover, table.extra tbody tr:hover {
-  background: #0695EC;
+  background: #77B5DC;
 }
 table.extra th:nth-child(2) {
   width: 300px;
@@ -161,7 +161,7 @@ table td {
   background: #6CC3F7;
 }
 .day .shift .employee-shift .del:active {
-  background: #0695EC;
+  background: #77B5DC;
 }
 .day .shift .add {
   color: darkgreen;
@@ -176,7 +176,7 @@ table td {
   background: #6CC3F7;
 }
 .day .shift .add:active {
-  background: #0695EC;
+  background: #77B5DC;
 }
 
 @media print {

@@ -1,6 +1,6 @@
 $backcolor: #eee;
 $forecolor: #000;
-$selected: #0695EC;
+$selected: #77B5DC;
 
 @mixin icon($img) {
   background-image: url($img);
@@ -11,6 +11,7 @@ $selected: #0695EC;
   height: 22px;
   margin: 5px -8px -3px 6px;
   content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
 }
 
 body {
@@ -73,20 +74,13 @@ body {
       margin-left: -40px;
       line-height: 1.75;
       cursor: pointer;
-
-      &.user::before { @include icon('/static/svg/user.svg'); }
-      &.passwd::before { @include icon('/static/svg/passwd.svg'); }
-      &.logout::before { @include icon('/static/svg/logout.svg'); }
-      &.month::before { @include icon('/static/svg/month.svg'); }
-      &.group::before { @include icon('/static/svg/group.svg'); }
-      &.open::before { @include icon('/static/svg/open.svg'); }
-      &.duplicate::before { @include icon('/static/svg/duplicate.svg'); }
-      &.delete::before { @include icon('/static/svg/delete.svg'); }
-      &.new::before { @include icon('/static/svg/new.svg'); }
+      position: relative;
 
       a {
         text-decoration: none;
-        margin-left: 12.5px;
+        position: absolute;
+        top: 6px;
+        left: 35px;
 
         &:link, &:visited, &:hover, &:active {
           color: inherit;
@@ -133,6 +127,11 @@ body {
     background: lightgrey;
     margin: 50px auto;
     padding: 15px 25px;
+
+    &.large {
+      max-width: 900px;
+      background: #ddd;
+    }
 
     p {
       &:not(.mensaje) {
@@ -204,6 +203,37 @@ body {
       margin: 15px 0 -30px 0;
     }
   }
+}
+
+.admin::before { @include icon('/static/svg/admin.svg'); }
+.user::before { @include icon('/static/svg/user.svg'); }
+.passwd::before { @include icon('/static/svg/passwd.svg'); }
+.logout::before { @include icon('/static/svg/logout.svg'); }
+.sched::before { @include icon('/static/svg/month.svg'); }
+.group::before { @include icon('/static/svg/group.svg'); }
+.open::before { @include icon('/static/svg/open.svg'); }
+.duplicate::before { @include icon('/static/svg/duplicate.svg'); }
+.delete::before { @include icon('/static/svg/delete.svg'); }
+.edit::before { @include icon('/static/svg/edit.svg'); }
+.new::before { @include icon('/static/svg/new.svg'); }
+
+.open { filter: invert(13%) sepia(45%) saturate(5823%) hue-rotate(223deg) brightness(92%) contrast(103%); }
+.duplicate { filter: invert(20%) sepia(81%) saturate(1956%) hue-rotate(88deg) brightness(101%) contrast(97%); }
+.delete { filter: invert(11%) sepia(75%) saturate(5459%) hue-rotate(357deg) brightness(108%) contrast(113%); }
+.edit { filter: invert(50%) sepia(34%) saturate(708%) hue-rotate(139deg) brightness(93%) contrast(91%); }
+
+td.icons {
+  cursor: default;
+  user-select: none;
+
+  a {
+    margin: 0 7px;
+    cursor: pointer;
+  }
+}
+
+ul#roles li {
+  list-style: none;
 }
 
 .ui-dialog {

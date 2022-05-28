@@ -51,100 +51,13 @@ body nav li {
   margin-left: -40px;
   line-height: 1.75;
   cursor: pointer;
-}
-body nav li.user::before {
-  background-image: url("/static/svg/user.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.passwd::before {
-  background-image: url("/static/svg/passwd.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.logout::before {
-  background-image: url("/static/svg/logout.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.month::before {
-  background-image: url("/static/svg/month.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.group::before {
-  background-image: url("/static/svg/group.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.open::before {
-  background-image: url("/static/svg/open.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.duplicate::before {
-  background-image: url("/static/svg/duplicate.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.delete::before {
-  background-image: url("/static/svg/delete.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
-}
-body nav li.new::before {
-  background-image: url("/static/svg/new.svg");
-  background-size: 22px;
-  background-position: center;
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin: 5px -8px -3px 6px;
-  content: "";
+  position: relative;
 }
 body nav li a {
   text-decoration: none;
-  margin-left: 12.5px;
+  position: absolute;
+  top: 6px;
+  left: 35px;
 }
 body nav li a:link, body nav li a:visited, body nav li a:hover, body nav li a:active {
   color: inherit;
@@ -171,7 +84,7 @@ body nav li.selected ul > li {
   visibility: visible;
 }
 body nav li.selected, body nav li:hover {
-  background: #0695EC;
+  background: #77B5DC;
 }
 body .box {
   width: 100%;
@@ -181,6 +94,10 @@ body .box {
   background: lightgrey;
   margin: 50px auto;
   padding: 15px 25px;
+}
+body .box.large {
+  max-width: 900px;
+  background: #ddd;
 }
 body .box p:not(.mensaje) {
   font-variant: small-caps;
@@ -235,6 +152,167 @@ body form table div.list {
   font-style: italic;
   line-height: 1.2;
   margin: 15px 0 -30px 0;
+}
+
+.admin::before {
+  background-image: url("/static/svg/admin.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.user::before {
+  background-image: url("/static/svg/user.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.passwd::before {
+  background-image: url("/static/svg/passwd.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.logout::before {
+  background-image: url("/static/svg/logout.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.sched::before {
+  background-image: url("/static/svg/month.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.group::before {
+  background-image: url("/static/svg/group.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.open::before {
+  background-image: url("/static/svg/open.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.duplicate::before {
+  background-image: url("/static/svg/duplicate.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.delete::before {
+  background-image: url("/static/svg/delete.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.edit::before {
+  background-image: url("/static/svg/edit.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.new::before {
+  background-image: url("/static/svg/new.svg");
+  background-size: 22px;
+  background-position: center;
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  margin: 5px -8px -3px 6px;
+  content: "";
+  filter: invert(22%) sepia(90%) saturate(1115%) hue-rotate(3deg) brightness(96%) contrast(101%);
+}
+
+.open {
+  filter: invert(13%) sepia(45%) saturate(5823%) hue-rotate(223deg) brightness(92%) contrast(103%);
+}
+
+.duplicate {
+  filter: invert(20%) sepia(81%) saturate(1956%) hue-rotate(88deg) brightness(101%) contrast(97%);
+}
+
+.delete {
+  filter: invert(11%) sepia(75%) saturate(5459%) hue-rotate(357deg) brightness(108%) contrast(113%);
+}
+
+.edit {
+  filter: invert(50%) sepia(34%) saturate(708%) hue-rotate(139deg) brightness(93%) contrast(91%);
+}
+
+td.icons {
+  cursor: default;
+  user-select: none;
+}
+td.icons a {
+  margin: 0 7px;
+  cursor: pointer;
+}
+
+ul#roles li {
+  list-style: none;
 }
 
 .ui-dialog {

@@ -1,46 +1,51 @@
-<nav>
-  <div class="menu">
-    <div class="bar1"></div>
-    <div class="bar2"></div>
-    <div class="bar3"></div>
-  </div>
-  <ul>
-    <li class="user">
-      <a>{{ user.id }}</a>
-      <ul>
-        <li class="passwd" onclick="window.location = '{{ url_for('password') }}';"><a>Cambiar contrase&ntilde;a</a></li>
-        <li class="logout" onclick="window.location = '{{ url_for('logout') }}';"><a>Cerrar sesi&oacute;n</a></li>
-      </ul>
-    </li>
-    <li class="new" onclick="new_schedule();">
-      <a>Nuevo Cuadro</a>
-    </li>
-    {% if user.data.get('schedules') %}
-      {% for s in user.data.get('schedules').split('|') | sort(reverse=True) %}
-        {% set s_date, s_month, s_group, s_id = s.split('@') %}
-        <li class="month {{ 'selected' if schedule_id == s_id else '' }}">
-          <a>{{ s_month }}</a>
-          <ul>
-            <li class="group">
-              <a>{{ s_group }}</a>
-              <ul>
-                <li class="open" onclick="open_schedule('{{ s_id }}');" title="Abrir"></li>
-                <!--<li class="duplicate" onclick="duplicate_schedule('{{ s_id }}');" title="Duplicar"></li>-->
-                <li class="delete" onclick="delete_schedule('{{ s_month }}', '{{ s_group }}', '{{ s_id }}');" title="Eliminar"></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      {% endfor %}
-    {% endif %}
-    <script type="text/javascript">
-const groups = {
-{% for g in groups %}  '{{ g.id }}': {
-    'str': '{{ g.name }}',
-    'list': {{ g.employee_names() | safe }}
-  },
-{% endfor %}};
-    </script>
-  </ul>
-</nav>
-<script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+{% if user.data %}
+  <nav>
+    <div class="menu">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
+    </div>
+    <ul>
+      <li class="user">
+        <a>{{ user.id }}</a>
+        <ul>
+          {% if 'admin' in user.data['roles'] %}
+            <li class="admin" onclick="window.location = '{{ url_for('dashboard') }}';"><a>Administrador</a></li>
+          {% endif %}
+          <li class="passwd" onclick="window.location = '{{ url_for('password') }}';"><a>Cambiar contrase&ntilde;a</a></li>
+          <li class="logout" onclick="window.location = '{{ url_for('logout') }}';"><a>Cerrar sesi&oacute;n</a></li>
+        </ul>
+      </li>
+      <li class="new" onclick="new_schedule();">
+        <a>Nuevo Cuadro</a>
+      </li>
+      {% if user.data.get('schedules') %}
+        {% for s in user.data.get('schedules').split('|') | sort(reverse=True) %}
+          {% set s_date, s_month, s_group, s_id = s.split('@') %}
+          <li class="sched {{ 'selected' if schedule_id == s_id else '' }}">
+            <a>{{ s_month }}</a>
+            <ul>
+              <li class="group">
+                <a>{{ s_group }}</a>
+                <ul>
+                  <li onclick="open_schedule('{{ s_id }}');" title="Abrir"><div class="open"></div></li>
+                  <!--<li class="duplicate" onclick="duplicate_schedule('{{ s_id }}');" title="Duplicar"></li>-->
+                  <li onclick="delete_schedule('{{ s_month }}', '{{ s_group }}', '{{ s_id }}');" title="Eliminar"><div class="delete"></div></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        {% endfor %}
+      {% endif %}
+      <script type="text/javascript">
+  const groups = {
+  {% for g in groups %}  '{{ g.id }}': {
+      'str': '{{ g.name }}',
+      'list': {{ g.employee_names() | safe }}
+    },
+  {% endfor %}};
+      </script>
+    </ul>
+  </nav>
+  <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+{% endif %}

@@ -30,7 +30,7 @@ class User:
     def __init__(self, id, passwd, hashed = False):
         self.id = id
         self.path = f'user_data/users/{self.id}.conf'
-        self.status = 'created'
+        self.status = 'loaded'
         self.passwd = passwd
         self.hashed = hashed
 
@@ -39,7 +39,7 @@ class User:
         elif not passwd:
             self.status = 'no_password'
         elif not os.path.exists(self.path):
-            self.status = 'wrong_id'
+            self.status = 'id_not_found'
         else:
             self.data = {}
             self.load_data()
@@ -86,3 +86,33 @@ class User:
         self.data['password'] = Password.hash_password(new_pass, salt)
         self.save_data()
         return 'success', 'Se cambi&oacute; la contrase&ntilde;a correctamente.'
+
+    def create_user(data):
+        user = User(data['user'], data['password'])
+        if user.status != 'id_not_found':
+            return 'user_exists'
+
+        user.data = {
+            'creation': datetime.now().strftime('%Y-%m-%d, %H:%M:%S'),
+            'name': data['name'],
+            'password': Password.hash_password(data['password']),
+            'roles': data['roles']
+        }
+        user.save_data()
+
+        return 'ok'
+
+    def delete_user(user):
+        os.remove(f'user_data/users/{user}.conf')
+
+    def all_users():
+        '''Returns a list of all users to admin dashboard'''
+        res = []
+        for (dirpath, dirnames, filenames) in os.walk(f'user_data/users'):
+            for filename in filenames:
+                with open(f'user_data/users/{filename}', 'r') as file:
+                    for line in file:
+                        if 'password' in line:
+                            password = line.split('\t')[1].strip()
+                            res += [ User(filename[:-5], password) ]
+        return res
