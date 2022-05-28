@@ -205,7 +205,7 @@ body .box .buttons {
   height: 100%;
   text-align: center;
 }
-body .box .buttons input[type=submit], body .box .buttons input[type=cancel], body .box .buttons input[type=button] {
+body .box .buttons input[type=submit], body .box .buttons input[type=button] {
   padding: 5px 10px;
 }
 body form table {
