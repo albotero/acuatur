@@ -67,7 +67,7 @@ class User:
             'created': f'Se creó el usuario <b><i>{self.id}</i></b>',
             'no_id': 'No ha iniciado sesión',
             'no_password': 'No especificó una contraseña',
-            'wrong_id': f'El usuario <b><i>{self.id}</i></b> no existe',
+            'id_not_found': f'El usuario <b><i>{self.id}</i></b> no existe',
             'wrong_password': 'Clave errada'
         }
         return m[self.status]
