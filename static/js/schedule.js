@@ -66,7 +66,7 @@ function add_shift(obj) {
       <tr>
         <th>Anestesi&oacute;logo:</td>
         <td>
-          <select name="employee_id">`;
+          <select name="employee_id" onfocus="this.select();">`;
 
   for (const [key, value] of Object.entries(anestesiologos)) {
     html += `<option value="${key}">${key} - ${value}&nbsp;&nbsp;</option>`
@@ -94,7 +94,9 @@ function add_shift(obj) {
   html += `</td>
       </tr>
     </table>
-  </form>`;
+  </form>
+  <script type="text/javascript">$('select[name=employee_id]').focus();</script>
+  `;
 
   $.confirm('Agregar turno', html, 'Agregar', 'Cancelar', () => {
     // Validate data

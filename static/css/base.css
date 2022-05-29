@@ -144,7 +144,7 @@ body form table tr td input[type=number] {
   width: 60px;
 }
 body form table tr td select {
-  max-width: 150px;
+  max-width: 225px;
   text-transform: capitalize;
 }
 body form table div.list {
