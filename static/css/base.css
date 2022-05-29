@@ -316,6 +316,7 @@ ul#roles li {
 }
 
 .ui-dialog {
+  position: fixed !important;
   top: 25% !important;
   border-radius: 7px !important;
   font-size: 14px !important;
