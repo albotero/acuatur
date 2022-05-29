@@ -14,6 +14,7 @@ class Group:
             self.name = file.readline().strip()
             for line in file:
                 self.employees += [ Employee(line.strip().split(',')) ]
+        self.employees.sort(key=lambda x: x.id)
 
     def employee_names(self):
         return [ x.name for x in self.employees ]
