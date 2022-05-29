@@ -183,9 +183,6 @@ def admin(data):
         if data.get('rem_user'):
             User.delete_user(data['rem_user'])
 
-        if data.get('list_users'):
-            pass
-
         emit('response', {'result': 'ok'})
     except Exception as ex:
         emit('response', f'error >> {ex}')

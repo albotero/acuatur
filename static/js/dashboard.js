@@ -17,7 +17,7 @@ function add_user() {
       </tr>
       <tr>
         <th>Nombre:</td>
-        <td><input type="text" name="name" /></td>
+        <td><input type="text" name="name" onkeyup="suggest_pass(this);" onkeypress="suggest_pass(this);" /></td>
       </tr>
       <tr>
         <th>Contrase&ntilde;a:</td>
@@ -55,6 +55,23 @@ function add_user() {
       $('#dialog').dialog('close');
     }
   }, false);
+}
+
+function suggest_pass(element) {
+  // Get first name of user
+  var password = $(element).val().split(' ')[0];
+  // Capitalize name
+  password = password.charAt(0).toUpperCase() + password.slice(1).toLowerCase();
+  // Add special characters
+  password = password.replace(/[AaÁá]/g,'4')
+                     .replace(/[EeÉé]/g,'3')
+                     .replace(/[IiÍí]/g,'1')
+                     .replace(/[OoÓó]/g,'0')
+                     .replace(/[Úú]/g,'u');
+  // Add random number
+  password += '$' + Math.floor(Math.random() * 10000 + 1);
+  // Show suggested password
+  $('#frm-nuevo-usuario input[name=password]').val(password);
 }
 
 function rem_user(user) {
