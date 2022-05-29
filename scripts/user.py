@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from datetime import datetime
-
+import pytz
 import hashlib
 import os
 
@@ -93,7 +93,7 @@ class User:
             return 'user_exists'
 
         user.data = {
-            'creation': datetime.now().strftime('%Y-%m-%d, %H:%M:%S'),
+            'creation': datetime.now(pytz.timezone('America/Bogota')).strftime('%Y-%m-%d, %H:%M:%S'),
             'name': data['name'],
             'password': Password.hash_password(data['password']),
             'roles': data['roles']
