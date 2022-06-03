@@ -66,7 +66,7 @@ function add_shift(obj) {
       <tr>
         <th>Anestesi&oacute;logo:</td>
         <td>
-          <select name="employee_id" onfocus="this.select();">`;
+          <select name="employee_id">`;
 
   for (const [key, value] of Object.entries(anestesiologos)) {
     html += `<option value="${key}">${key} - ${value}&nbsp;&nbsp;</option>`

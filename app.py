@@ -1,6 +1,6 @@
-#!/usr/bin/python3
+c#!/usr/bin/python3
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import SocketIO, emit
 
 from scripts.calendar import dow
@@ -9,6 +9,7 @@ from scripts.schedule import Schedule, Shift
 from scripts.user import User
 
 import os
+import pdfkit
 
 app = Flask(__name__, instance_relative_config = True)
 app.secret_key = 'acuatur'
@@ -140,6 +141,49 @@ def update_schedule(data):
 def del_schedule():
     Schedule.load_from_file(request.values.get('id')).delete()
     return redirect(url_for('.index'))
+
+@app.route('/download', methods=['POST'])
+def download():
+    '''Saves schedule pdf to file, and return path and filename for download'''
+    # Retrieve schedule from file
+    sched = Schedule.load_from_file(request.values.get('id'))
+
+    # Create temp folder if not exists
+    dir = '/tmp/acuatur'
+    os.makedirs(dir, exist_ok=True)
+
+    filename = f'{sched.id}.pdf' # Filename in temp folder
+    download_name = f'{sched.group.name} - {sched.get_month().title}.pdf' # Filename for user
+
+    # Generates PDF
+    css = [ 'static/css/base.css', 'static/css/schedule.css' ]
+    options = {
+        'enable-local-file-access': '',
+        'page-size': 'Letter',
+        'margin-top': '0.75in',
+        'margin-right': '0.75in',
+        'margin-bottom': '0.75in',
+        'margin-left': '0.75in',
+        'encoding': "UTF-8",
+        'custom-header': [
+            ('Accept-Encoding', 'gzip')
+        ],
+    }
+
+    pdfkit.from_string(
+            schedule(sched.id),
+            os.path.join(dir, filename),
+            css = css,
+            options = options,
+            verbose = True
+        )
+
+    # Return PDF to user
+    return send_from_directory(directory=dir,
+                                filename=filename,
+                                path=filename,
+                                download_name=download_name,
+                                as_attachment=True)
 
 @app.route('/password', methods=['GET', 'POST'])
 def password():

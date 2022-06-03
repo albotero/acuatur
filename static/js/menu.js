@@ -11,8 +11,14 @@ function open_schedule(id) {
   location.replace(`/schedule/${id}`);
 }
 
-function duplicate_schedule(id) {
-
+function download_schedule(id) {
+  $(`<form action="/download" target="_blank" method="POST">
+      <input type="hidden" name="id" value="${id}">
+    </form>`)
+    .appendTo('body')
+    .submit()
+    .remove();
+  return;
 }
 
 function delete_schedule(mo, gr, id) {
