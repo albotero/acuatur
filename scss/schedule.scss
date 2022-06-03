@@ -222,8 +222,11 @@ table {
 
   table {
     page-break-inside: auto;
-    page-break-after: always;
     line-height: 1;
+
+    &:not(.schedule) {      
+      page-break-before: always;
+    }
 
     thead {
       display: table-header-group;

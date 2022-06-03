@@ -1,4 +1,4 @@
-c#!/usr/bin/python3
+#!/usr/bin/python3
 
 from flask import Flask, render_template, request, session, redirect, url_for, send_from_directory
 from flask_socketio import SocketIO, emit

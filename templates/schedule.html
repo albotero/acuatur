@@ -41,7 +41,7 @@
                 <div class="day{{ holiday }}">
                   <div class="title">{{ day }}</div>
                   {% for shift, employees in schedule.employees_in_day(day).items() %}
-                    <div class="shift {{ shift }} noprint" id="{{ day }}-{{ shift }}">
+                    <div class="shift {{ shift }}{{ '' if employees|length > 0  else ' noprint' }}" id="{{ day }}-{{ shift }}">
                       <div class="title">{{ shifts.get(shift) }}</div>
                       {% for employee in employees %}
                         <div class="employee-shift" id="{{ employee[0] }}">

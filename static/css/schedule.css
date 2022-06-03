@@ -194,8 +194,10 @@ table td {
 
   table {
     page-break-inside: auto;
-    page-break-after: always;
     line-height: 1;
+  }
+  table:not(.schedule) {
+    page-break-before: always;
   }
   table thead {
     display: table-header-group;
