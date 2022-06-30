@@ -18,7 +18,7 @@ div.tables {
   }
 
   table {
-      margin-bottom: 40px;
+    margin-bottom: 40px;
   }
 }
 
@@ -242,8 +242,8 @@ table {
       }
     }
 
-    &:not(.schedule) tr {
-      page-break-inside: avoid;
+    tr {
+      page-break-inside: avoid !important;
       page-break-after: auto;
       line-height: 1.6;
     }
@@ -252,6 +252,7 @@ table {
   .day {
     margin: 0.5mm 1mm;
     background: #fff !important;
+    page-break-inside: avoid !important;
 
     > .title {
       padding-top: 0.5mm;
