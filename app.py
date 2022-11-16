@@ -131,7 +131,8 @@ def update_schedule(data):
         res['result'] = 'ok'
         res['summary'] = sched.summary_html()
         res['cext'] = sched.summary_cext()
-        res['extra'] = sched.summary_extra()
+        res['cen'] = sched.summary_extra('cen', 'cenizos')
+        res['extra'] = sched.summary_extra('ex', 'horas extra')
 
         emit('response', res)
     except Exception as ex:
