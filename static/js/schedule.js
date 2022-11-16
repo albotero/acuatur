@@ -17,6 +17,7 @@ socket.on('response', function(data) {
   // Update summaries
   $('table.summary').html(data['summary']);
   $('table.cext').html(data['cext']);
+  $('table.cen').html(data['cen']);
   $('table.extra').html(data['extra']);
   // Add shifts if apply
   if ('add' in data) {
