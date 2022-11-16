@@ -61,8 +61,8 @@
       {% endfor %}
     </table>
     <table class="cext">{{ schedule.summary_cext() | safe }}</table>
+    <table class="cen">{{ schedule.summary_extra('cen', 'cenizos') | safe }}</table>
     <table class="extra">{{ schedule.summary_extra('ex', 'horas extra') | safe }}</table>
-    <table class="extra">{{ schedule.summary_extra('cen', 'cenizos') | safe }}</table>
   </div>
 
   <table class="summary">{{ schedule.summary_html() | safe }}</table>
