@@ -89,7 +89,7 @@ class Schedule:
     def employee_hours(self, employee_id = None, shift = None, holidays = None):
         return sum([ x.hours for x in self.shifts if (
                             (x.employee_id == employee_id if employee_id else True) and
-                            (shift in x.shift if shift else True) and
+                            (x.shift.startswith(shift) if shift else True) and
                             (self.get_month().sunday_or_holiday(x.day)
                                 if holidays
                                 else (not self.get_month().sunday_or_holiday(x.day))
@@ -116,10 +116,10 @@ class Schedule:
 
             # Holiday-Sunday day shifts
             holiday_sunday = (
-                self.employee_hours(employee_id = e.id, shift = 'qx_am', holidays = True) +
-                self.employee_hours(employee_id = e.id, shift = 'qx_pm', holidays = True) + 
-                self.employee_hours(employee_id = e.id, shift = 'obs_am', holidays = True) +
-                self.employee_hours(employee_id = e.id, shift = 'obs_pm', holidays = True)
+                self.employee_hours(employee_id = e.id, shift = 'qx_am', holidays = True)
+                + self.employee_hours(employee_id = e.id, shift = 'qx_pm', holidays = True)
+                #+ self.employee_hours(employee_id = e.id, shift = 'obs_am', holidays = True)
+                #+ self.employee_hours(employee_id = e.id, shift = 'obs_pm', holidays = True)
                 )
             row += [ holiday_sunday ]
 
@@ -127,8 +127,8 @@ class Schedule:
             row += [
                 self.employee_hours(employee_id = e.id, shift = 'qx_am')
                 + self.employee_hours(employee_id = e.id, shift = 'qx_pm')
-                + self.employee_hours(employee_id = e.id, shift = 'obs_am')
-                + self.employee_hours(employee_id = e.id, shift = 'obs_pm')
+                #+ self.employee_hours(employee_id = e.id, shift = 'obs_am')
+                #+ self.employee_hours(employee_id = e.id, shift = 'obs_pm')
                 - holiday_sunday
                 ]
 
@@ -149,10 +149,10 @@ class Schedule:
                 self.employee_hours(employee_id = e.id, shift = 'ud_am')
                 + self.employee_hours(employee_id = e.id, shift = 'ud_pm')
                 ]
-                
+
             # Cenizo
             row += [self.employee_hours(employee_id = e.id, shift = 'cen')]
-            
+
             # Extra hours
             row += [self.employee_hours(employee_id = e.id, shift = 'ex')]
 
@@ -168,7 +168,7 @@ class Schedule:
             summary[a][1] = f'{summary[a][1]} H' # Totales
             summary[a][-2] = f'{summary[a][-2]} H' # Cenizo
             summary[a][-1] = f'{summary[a][-1]} H' # Extras
-            for b in range(2, len(summary[0]) - 1):
+            for b in range(2, len(summary[0]) - 2):
                 total_shifts = summary[a][b] / 12
                 total_shifts = int(total_shifts) if float(total_shifts).is_integer() else total_shifts
                 summary[a][b] = f'{total_shifts}: {summary[a][b]} H'
@@ -202,7 +202,7 @@ class Schedule:
         '''Returns list of tuples with day, employee, shift, hours in cext'''
         cext = []
         for shift in self.shifts:
-            if 'ce' in shift.shift:
+            if 'ce_' in shift.shift:
                 cext.append( (shift.day,
                               f'{shift.day}/{self.month}/{self.year}',
                               shift.employee_id,
