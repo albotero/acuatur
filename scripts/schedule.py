@@ -18,10 +18,13 @@ class Shift:
         'qx_am': 'Quirófano Am',
         'ud_am': 'U.Digestiva Am',
         'ce_am': 'C.Externa Am',
+        'obs_am': 'Analgesia OB Am',
         'qx_pm': 'Quirófano Pm',
         'ud_pm': 'U.Digestiva Pm',
         'ce_pm': 'C.Externa Pm',
+        'obs_pm': 'Analgesia OB Pm',
         'n': 'Noche',
+        'cen': 'Cenizo',
         'ex': 'Extra'
     }
 
@@ -97,7 +100,8 @@ class Schedule:
     def summary(self):
         titles = ['anestesiólogo', 'total horas', 'noche',
                     'fest-dom día', 'día', 'c. externa',
-                    'u. digestiva', 'horas extra']
+                    'analgesia ob', 'u. digestiva',
+                    'cenizo', 'horas extra']
         summary = []
 
         for e in self.employees:
@@ -113,7 +117,9 @@ class Schedule:
             # Holiday-Sunday day shifts
             holiday_sunday = (
                 self.employee_hours(employee_id = e.id, shift = 'qx_am', holidays = True) +
-                self.employee_hours(employee_id = e.id, shift = 'qx_pm', holidays = True)
+                self.employee_hours(employee_id = e.id, shift = 'qx_pm', holidays = True) + 
+                self.employee_hours(employee_id = e.id, shift = 'obs_am', holidays = True) +
+                self.employee_hours(employee_id = e.id, shift = 'obs_pm', holidays = True)
                 )
             row += [ holiday_sunday ]
 
@@ -130,12 +136,21 @@ class Schedule:
                 + self.employee_hours(employee_id = e.id, shift = 'ce_pm')
                 ]
 
+            # OB Analg shifts
+            row += [
+                self.employee_hours(employee_id = e.id, shift = 'obs_am')
+                + self.employee_hours(employee_id = e.id, shift = 'obs_pm')
+                ]
+
             # U.D. shifts
             row += [
                 self.employee_hours(employee_id = e.id, shift = 'ud_am')
                 + self.employee_hours(employee_id = e.id, shift = 'ud_pm')
                 ]
-
+                
+            # Cenizo
+            row += [self.employee_hours(employee_id = e.id, shift = 'cen')]
+            
             # Extra hours
             row += [self.employee_hours(employee_id = e.id, shift = 'ex')]
 
@@ -217,11 +232,11 @@ class Schedule:
                 '''
         return html
 
-    def summary_extra(self):
+    def summary_extra(self, extra_type, extra_title):
         '''Returns list of tuples with day, employee, shift, hours in extra'''
         extra = []
         for shift in self.shifts:
-            if 'ex' in shift.shift:
+            if extra_type in shift.shift:
                 extra.append( (shift.day,
                               f'{shift.day}/{self.month}/{self.year}',
                               [x.name for x in self.group.employees if x.id == shift.employee_id][0],
@@ -231,9 +246,9 @@ class Schedule:
         if not len(extra):
             return ''
 
-        html = '''
+        html = f'''
             <thead>
-              <th colspan="3">Horas Extra</th>
+              <th colspan="3">{extra_title}</th>
               <tr>
                   <th>D&iacute;a</th>
                   <th>Anestesi&oacute;logo</th>
