@@ -34,32 +34,32 @@ table thead tr:first-child th:first-child {
 table.summary tr:last-child {
   font-weight: bold;
 }
-table.summary, table.cext, table.extra {
+table.summary, table.cext, table.cen, table.extra {
   padding: 10px 0 10px 10px;
   margin-top: 20px;
 }
-table.summary th, table.summary td, table.cext th, table.cext td, table.extra th, table.extra td {
+table.summary th, table.summary td, table.cext th, table.cext td, table.cen th, table.cen td, table.extra th, table.extra td {
   border: 1px solid lightgrey;
 }
-table.summary th, table.cext th, table.extra th {
+table.summary th, table.cext th, table.cen th, table.extra th {
   width: 90px;
   background: #818181;
   color: white;
   padding: 5px 2px;
 }
-table.summary th:first-child, table.cext th:first-child, table.extra th:first-child {
+table.summary th:first-child, table.cext th:first-child, table.cen th:first-child, table.extra th:first-child {
   width: 120px;
 }
-table.summary tbody tr, table.cext tbody tr, table.extra tbody tr {
+table.summary tbody tr, table.cext tbody tr, table.cen tbody tr, table.extra tbody tr {
   background: #eee;
 }
-table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.extra tbody tr:nth-child(2n) {
+table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.cen tbody tr:nth-child(2n), table.extra tbody tr:nth-child(2n) {
   background: #e2e2e2;
 }
-table.summary tbody tr:hover, table.cext tbody tr:hover, table.extra tbody tr:hover {
+table.summary tbody tr:hover, table.cext tbody tr:hover, table.cen tbody tr:hover, table.extra tbody tr:hover {
   background: #77B5DC;
 }
-table.extra th:nth-child(2) {
+table.cen th:nth-child(2), table.extra th:nth-child(2) {
   width: 300px;
 }
 table td {
