@@ -127,6 +127,8 @@ class Schedule:
             row += [
                 self.employee_hours(employee_id = e.id, shift = 'qx_am')
                 + self.employee_hours(employee_id = e.id, shift = 'qx_pm')
+                + self.employee_hours(employee_id = e.id, shift = 'obs_am')
+                + self.employee_hours(employee_id = e.id, shift = 'obs_pm')
                 - holiday_sunday
                 ]
 
