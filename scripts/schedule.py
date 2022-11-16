@@ -164,6 +164,7 @@ class Schedule:
 
         for a in range(len(summary)):
             summary[a][1] = f'{summary[a][1]} H' # Totales
+            summary[a][-2] = f'{summary[a][-2]} H' # Cenizo
             summary[a][-1] = f'{summary[a][-1]} H' # Extras
             for b in range(2, len(summary[0]) - 1):
                 total_shifts = summary[a][b] / 12
