@@ -45,7 +45,7 @@ table {
     font-weight: bold;
   }
 
-  &.summary, &.cext, &.extra {
+  &.summary, &.cext, &.cen, &.extra {
     padding: 10px 0 10px 10px;
     margin-top: 20px;
 
@@ -77,8 +77,10 @@ table {
     }
   }
 
-  &.extra th:nth-child(2) {
-    width: 300px;
+  &.extra, &.cen {
+    th:nth-child(2) {
+        width: 300px;
+    }
   }
 
   td {
