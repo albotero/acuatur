@@ -9,39 +9,70 @@
     {% include 'menu.html' %}
   {% endwith %}
 
-  <div class="box large">
-    <p class="title">Usuarios</p>
-    <table>
-      <tr>
-        <th>Usuario</th>
-        <th>Nombre</th>
-        <th>Creaci&oacute;n</th>
-        <th>Roles</th>
-        <th>Acciones</th>
-      </tr>
-      {% for u in all_users %}
+  {% for g in groups %}
+    <div class="box large">
+      <p class="title">Grupo: {{ g.id }}</p>
+      <table>
         <tr>
-          <td>{{ u.id }}</td>
-          <td>{{ u.data['name'] }}</td>
-          <td>{{ u.data['creation'] }}</td>
-          <td>{{ u.data['roles'] }}</td>
-          <td class="icons">
-            <a class="edit" title="Editar"></a>
-            {% if u.id != user.id %}
-              <a class="delete" title="Eliminar" onclick="rem_user('{{ u.id }}');"></a>
-            {% endif %}
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+        {% for e in g.employees %}
+          <tr>
+            <td>{{ e.id }}</td>
+            <td>{{ e.name }}</td>
+            <td class="icons">
+              <a class="delete" title="Eliminar" onclick="rem_empl('{{ e.id }}', '{{ g.id }}', '{{ g.name }}');"></a>
+            </td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="3">
+            <div class="buttons">
+              <button onclick="add_empl('{{ g.id }}', '{{ g.name }}');">Adicionar</button>
+            </div>
           </td>
         </tr>
-      {% endfor %}
-      <tr>
-        <td colspan="5">
-          <div class="buttons">
-            <button onclick="add_user();">Crear Usuario</button>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
+      </table>
+    </div>
+  {% endfor %}
+
+  {% if user.id == 'abotero' %}
+    <div class="box large">
+      <p class="title">Usuarios</p>
+      <table>
+        <tr>
+          <th>Usuario</th>
+          <th>Nombre</th>
+          <th>Creaci&oacute;n</th>
+          <th>Roles</th>
+          <th>Acciones</th>
+        </tr>
+        {% for u in all_users %}
+          <tr>
+            <td>{{ u.id }}</td>
+            <td>{{ u.data['name'] }}</td>
+            <td>{{ u.data['creation'] }}</td>
+            <td>{{ u.data['roles'] }}</td>
+            <td class="icons">
+              <!--<a class="edit" title="Editar"></a>-->
+              {% if u.id != user.id %}
+                <a class="delete" title="Eliminar" onclick="rem_user('{{ u.id }}');"></a>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="5">
+            <div class="buttons">
+              <button onclick="add_user();">Crear Usuario</button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block scripts %}

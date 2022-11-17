@@ -141,6 +141,10 @@ body {
         font-size: 20px;
       }
 
+      &.title {
+        text-transform: capitalize;
+      }
+
       &.error {
         color: red;
       }

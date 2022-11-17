@@ -219,14 +219,17 @@ def dashboard():
 @socketio.on('admin')
 def admin(data):
     try:
-        # Load existing data
-        res = {}
-
         if data.get('add_user'):
             User.create_user(data['add_user'])
 
         if data.get('rem_user'):
             User.delete_user(data['rem_user'])
+
+        if data.get('add_empl'):
+            Group(data['add_empl']['group']).add_employee(data['add_empl']['id'], data['add_empl']['name'])
+
+        if data.get('rem_empl'):
+            Group(data['rem_empl']['group']).rem_employee(data['rem_empl']['id'])
 
         emit('response', {'result': 'ok'})
     except Exception as ex:

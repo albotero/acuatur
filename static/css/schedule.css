@@ -59,7 +59,7 @@ table.summary tbody tr:nth-child(2n), table.cext tbody tr:nth-child(2n), table.c
 table.summary tbody tr:hover, table.cext tbody tr:hover, table.cen tbody tr:hover, table.extra tbody tr:hover {
   background: #77B5DC;
 }
-table.cen th:nth-child(2), table.extra th:nth-child(2) {
+table.extra th:nth-child(2), table.cen th:nth-child(2) {
   width: 300px;
 }
 table td {
@@ -75,7 +75,6 @@ table td {
     left: 50%;
     transform: translateX(-50%);
   }
-
   table.summary {
     position: fixed;
     top: 10px;
@@ -187,11 +186,9 @@ table td {
     font-size: 9pt !important;
     background: #fff !important;
   }
-
   .noprint, .del, .hours, .add, nav {
     display: none;
   }
-
   table {
     page-break-inside: auto;
     line-height: 1;
@@ -210,15 +207,15 @@ table td {
     background: #fff !important;
     color: #000;
   }
-  table:not(.schedule) tr {
-    page-break-inside: avoid;
+  table tr {
+    page-break-inside: avoid !important;
     page-break-after: auto;
     line-height: 1.6;
   }
-
   .day {
     margin: 0.5mm 1mm;
     background: #fff !important;
+    page-break-inside: avoid !important;
   }
   .day > .title {
     padding-top: 0.5mm;

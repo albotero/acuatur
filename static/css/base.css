@@ -105,6 +105,9 @@ body .box p:not(.mensaje) {
   margin: 0 0 10px 0;
   font-size: 20px;
 }
+body .box p.title {
+  text-transform: capitalize;
+}
 body .box p.error {
   color: red;
 }
@@ -335,11 +338,9 @@ ul#roles li {
 }
 
 .ui-widget-overlay {
-  opacity: 0.6 !important;
-  /* Make sure to change both of these, as IE only sees the second one */
+  opacity: 0.6 !important; /* Make sure to change both of these, as IE only sees the second one */
   filter: Alpha(Opacity=60) !important;
-  background: rgb(50, 50, 50) !important;
-  /* This will make it darker */
+  background: rgb(50, 50, 50) !important; /* This will make it darker */
 }
 
 .ui-widget-content .del-schedule {
